@@ -5,7 +5,7 @@
 import numpy as np, wave, sys
 
 SR = 44100
-DUR = 25.7
+DUR = float(sys.argv[2]) if len(sys.argv) > 2 else 25.7   # gen-bgm.py <out.wav> [duration_s]
 N = int(SR * DUR)
 t = np.arange(N) / SR
 BPM = 100.0

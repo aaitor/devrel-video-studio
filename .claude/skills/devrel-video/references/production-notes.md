@@ -45,9 +45,14 @@ Each has a commented seam in `templates/composition.html` and a field in `brief.
    `--local-only` (MusicGen). Under narration, lower the bed and duck with `/hyperframes-audio` (voiceover
    carve). Tune key/tempo/layers in `gen-bgm.py`. Note: convert footage with **dense keyframes**
    (`-g 30 -keyint_min 30 -sc_threshold 0`) or the renderer freezes footage frames between seeks.
-2. **Background narration (2a).** Write a short script, then TTS via `/media-use` (Kokoro) or record it.
-   **Lock scene/chapter times to the finished audio, not the reverse.** Add a narration `<audio>` track and
-   dip the music under it. `narrated-devrel` mode.
+2. **Background narration (2a).** ✅ Supported. TTS each beat line with `scripts/tts.sh` (Orpheus on Melkor,
+   voice `leah`; restart `start_orpheus_stack.sh` if it 502s — post-reboot it can segfault at slot-init, see
+   the `orpheus-tts-melkor` memory). `templates/narrate.py` measures the lines, **derives the scene/chapter
+   times from the audio** (never the reverse), writes `voice.wav`, and re-times `captions.<lang>.srt` to the
+   voice. Retime the composition to those numbers (a 26s silent cut → ~31s), then `scripts/mix-audio.sh`
+   ducks the music bed under the voice and masters to −16 LUFS. Clean text first (no parens/version numbers;
+   em-dash → comma). Piper (`en_US-lessac-medium`, bundles its own onnxruntime) is a working no-auth fallback.
+   `narrated-devrel` mode.
 3. **Avatar (2b).** A talking-head presenter, lip-synced to the narration, composited in a corner
    (`#avatar` `<video>` seam). Generate with a talking-head tool (HeyGen — HyperFrames' parent — or
    `/talking-head-recut` for packaging). It depends on (2a): narration first, avatar rendered against it.

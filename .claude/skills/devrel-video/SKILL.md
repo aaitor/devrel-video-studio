@@ -45,12 +45,15 @@ Copy `templates/hero-script.js` → `capture.js`; edit the beats (eased `scrollT
 `hyperframes init projects/<slug> --video capture.mp4 --skip-transcribe --non-interactive`, then replace `index.html` with `templates/composition.html`, filled from the brief + tokens:
 title card (real claims) → footage in a browser frame → chapter lower-thirds synced to the capture beats (+ the title-card offset) → CTA. Give **every animated element a stable `id`** (GSAP and lint both require it).
 
+### 5.4 · Narration (optional — drives the timeline)
+For a narrated cut the **voice sets the timing.** Write ~1 line per beat (clean text: no parens/version numbers, em-dash → comma). Synth each with Orpheus `leah`: `scripts/tts.sh "<line>" vo1.wav` (Melkor `orpheus-tts`; restart its stack if it 502s). Then adapt `templates/narrate.py` (footage length, beat times, line texts) — it measures the lines, computes scene/chapter times, writes `voice.wav`, and **re-times `captions.<lang>.srt` to the voice**. Retime the composition to those numbers (scenes grow — a 26s silent cut becomes ~31s), mix (next step), render. `narrated-devrel` mode.
+
 ### 5.5 · Music (optional)
 Local, license-clean bed — no auth, no model:
 `python3 .claude/skills/devrel-video/scripts/gen-bgm.py bed.wav && ffmpeg -i bed.wav -b:a 192k projects/<slug>/bgm.mp3`,
 then add the `<audio id="bgm" class="clip" src="bgm.mp3" … data-track-index="9" data-volume="0.85">` seam to the
 composition (lower the volume under narration). For a produced track: `/media-use resolve --type bgm`
-(HeyGen catalog — needs `heygen` sign-in) or `--local-only` (MusicGen), dropped into the same seam.
+(HeyGen catalog — needs `heygen` sign-in) or `--local-only` (MusicGen), dropped into the same seam. **With narration**, don't stack two audio clips — pre-mix: `scripts/mix-audio.sh bgm.wav voice.wav narration-mix.mp3` ducks the bed under the voice and masters to −16 LUFS; use that one file in the seam at `data-volume="1"`.
 
 ### 5.6 · Subtitles (optional)
 Author caption cues timed to the beats → `projects/<slug>/captions.<lang>.srt` — soft, toggleable, platform-standard; **one file per language** covers "alternative subtitles". Ship the `.srt` next to the video (YouTube/LinkedIn read it). For autoplay-muted social, burn a hard cut: `scripts/subtitles.sh projects/<slug> captions.en.srt`. When narration exists, derive the cues from its transcript (WhisperX via `/media-use`) instead of authoring.
@@ -75,4 +78,4 @@ Author caption cues timed to the beats → `projects/<slug>/captions.<lang>.srt`
 
 ## Not built yet
 
-Background narration · talking-head avatar (music and subtitles are supported — steps 5.5, 5.6). See `references/production-notes.md → Roadmap` — each has a seam in `templates/composition.html` and a field in `brief.yaml`.
+Talking-head avatar (narration, music, and subtitles are supported — steps 5.4–5.6). See `references/production-notes.md → Roadmap`.

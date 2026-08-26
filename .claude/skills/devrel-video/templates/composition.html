@@ -97,8 +97,9 @@
         MUSIC:     <audio id="bgm" class="clip" src="bgm.mp3" data-start="0" data-duration="{{TOTAL}}" data-track-index="9" data-volume="0.85"></audio>
                    local bed: scripts/gen-bgm.py bed.wav → ffmpeg -i bed.wav bgm.mp3. Or /media-use resolve --type bgm.
                    Keep it a bed; if NARRATION exists, lower data-volume and duck via /hyperframes-audio.
-        NARRATION: <audio class="clip" src="narration.wav" data-start="0" data-duration="{{TOTAL}}" data-track-index="10" data-volume="1"></audio>
-                   TTS via /media-use (Kokoro) or recorded VO. Lock SCENE/CHAPTER times to the audio, not the reverse.
+        NARRATION: scripts/tts.sh (Orpheus 'leah') per beat -> narrate.py derives scene/chapter times from the audio
+                   -> mix-audio.sh ducks the bed under the voice (-16 LUFS) -> use that one mp3 in the MUSIC seam above.
+                   Lock SCENE/CHAPTER times to the audio, not the reverse (a 26s silent cut grows to ~31s).
         AVATAR:    <video id="avatar" class="clip" src="avatar.mp4" muted playsinline data-start="3.0" data-duration="{{FOOTAGE_DURATION}}" data-track-index="11"
                      style="position:absolute; right:60px; bottom:120px; width:360px; border-radius:16px; z-index:7"></video>
                    talking-head lip-synced to NARRATION; see /talking-head-recut (+ HeyGen avatar).

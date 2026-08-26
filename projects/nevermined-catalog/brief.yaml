@@ -33,6 +33,6 @@ outputs:
 
 audio:
   music: bgm.mp3   # local synth bed via scripts/gen-bgm.py
-  narration: null
+  narration: leah   # Orpheus voiceover (scripts/tts.sh); composition re-timed to the voice (25.7s -> 31s)
   avatar: null
   subtitles: [en, es]   # captions.en.srt, captions.es.srt
