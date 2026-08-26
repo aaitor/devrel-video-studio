@@ -51,9 +51,12 @@ Each has a commented seam in `templates/composition.html` and a field in `brief.
 3. **Avatar (2b).** A talking-head presenter, lip-synced to the narration, composited in a corner
    (`#avatar` `<video>` seam). Generate with a talking-head tool (HeyGen — HyperFrames' parent — or
    `/talking-head-recut` for packaging). It depends on (2a): narration first, avatar rendered against it.
-4. **Subtitles (3).** Transcribe the narration with WhisperX via `/media-use` (word-level timing), then
-   render timed caption `.clip` lines, or hand off to `/embedded-captions`. Keep a terminology dictionary
-   (product names, protocols like x402/MPP) and proofread. "Alternative subtitles" = multiple language
-   tracks from the same transcript.
+4. **Subtitles (3).** ✅ Supported. Author caption cues timed to the beats → `captions.<lang>.srt` (soft,
+   toggleable, one file per language). Ship the `.srt` alongside the clean video; burn a social/autoplay
+   cut with `scripts/subtitles.sh`. Once narration exists, generate cues from its transcript (WhisperX via
+   `/media-use`, word-level timing) instead of authoring, or hand off to `/embedded-captions`. Keep a
+   terminology dictionary (product names, protocols like x402/MPP) and proofread. "Alternative subtitles"
+   = multiple language `.srt` from the same cues.
 
-Dependency order: **narration → (avatar, subtitles)**; music is independent.
+Dependency order: **narration → avatar**; subtitles and music are independent (author subtitles to the
+beats now; re-time them to the narration transcript when it exists).

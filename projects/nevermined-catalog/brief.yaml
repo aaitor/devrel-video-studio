@@ -35,4 +35,4 @@ audio:
   music: bgm.mp3   # local synth bed via scripts/gen-bgm.py
   narration: null
   avatar: null
-  subtitles: false
+  subtitles: [en, es]   # captions.en.srt, captions.es.srt

@@ -52,6 +52,9 @@ then add the `<audio id="bgm" class="clip" src="bgm.mp3" … data-track-index="9
 composition (lower the volume under narration). For a produced track: `/media-use resolve --type bgm`
 (HeyGen catalog — needs `heygen` sign-in) or `--local-only` (MusicGen), dropped into the same seam.
 
+### 5.6 · Subtitles (optional)
+Author caption cues timed to the beats → `projects/<slug>/captions.<lang>.srt` — soft, toggleable, platform-standard; **one file per language** covers "alternative subtitles". Ship the `.srt` next to the video (YouTube/LinkedIn read it). For autoplay-muted social, burn a hard cut: `scripts/subtitles.sh projects/<slug> captions.en.srt`. When narration exists, derive the cues from its transcript (WhisperX via `/media-use`) instead of authoring.
+
 ### 6 · Render + QA → `projects/<slug>/renders/`
 `scripts/render-qa.sh projects/<slug>` → high master + web-compressed copy + ffprobe + contact sheet. Gates before "done":
 - `hyperframes lint` 0 errors · `hyperframes check` passes (Contrast AA).
@@ -72,4 +75,4 @@ composition (lower the volume under narration). For a produced track: `/media-us
 
 ## Not built yet
 
-Background narration · talking-head avatar · subtitles (music is supported — step 5.5). See `references/production-notes.md → Roadmap` — each has a seam in `templates/composition.html` and a field in `brief.yaml`.
+Background narration · talking-head avatar (music and subtitles are supported — steps 5.5, 5.6). See `references/production-notes.md → Roadmap` — each has a seam in `templates/composition.html` and a field in `brief.yaml`.

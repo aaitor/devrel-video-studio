@@ -48,5 +48,5 @@ The skill gathers anything it still needs (audience, the one message, approved c
 
 ## Not built yet
 
-Background narration · talking-head avatar · subtitles (music is supported) — roadmap in
+Background narration · talking-head avatar (music and subtitles are supported) — roadmap in
 [`.claude/skills/devrel-video/references/production-notes.md`](.claude/skills/devrel-video/references/production-notes.md).

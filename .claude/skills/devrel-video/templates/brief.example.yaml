@@ -37,4 +37,4 @@ audio:
   music: null                 # bgm.mp3 → scripts/gen-bgm.py (local, no auth) or /media-use resolve --type bgm
   narration: null             # script or TTS (Kokoro via /media-use); lock scene times to the audio
   avatar: null                # talking-head lip-synced to narration; /talking-head-recut
-  subtitles: false            # from the narration transcript (WhisperX via /media-use) or /embedded-captions
+  subtitles: []               # e.g. [en, es] -> captions.<lang>.srt (author to the beats, or from narration later)
