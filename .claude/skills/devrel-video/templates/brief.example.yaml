@@ -1,0 +1,40 @@
+# devrel-video project manifest. Copy to projects/<slug>/brief.yaml and fill in.
+id: example-walkthrough
+mode: silent-demo             # silent-demo | narrated-devrel (roadmap) | promo (roadmap)
+audience: developers evaluating the product
+message: "One clear outcome the video proves"
+cta:
+  title: "Start building"
+  url: "example.com/docs"
+duration_target_seconds: 30
+brand: nevermined             # brands/<name>/  (tokens.json + logo.svg)
+
+capture:
+  url: "https://example.com/app"
+  start_command: null         # local products, e.g. "npm run dev"
+  viewport: "1600x900"
+  url_label: "example.com/app"  # shown in the browser-frame address bar
+
+# Each beat becomes a chapter lower-third. chapter data-start = 3.0 (title) + at_seconds.
+beats:
+  - label: "First thing you see"
+    at_seconds: 0.3
+  - label: "The key action"
+    at_seconds: 7.5
+  - label: "The payoff"
+    at_seconds: 13.8
+
+approved_claims:              # only these may appear on screen — from the captured page, never invented
+  - "put real numbers/names here"
+
+outputs:
+  - profile: docs-16x9        # 1920x1080, silent
+  # - profile: social-9x16    # roadmap: recompose for portrait, don't crop
+  # - profile: web-loop       # roadmap: short muted loop
+
+# ── ROADMAP fields (not built yet — see references/production-notes.md) ──
+audio:
+  music: null                 # path or brief → /media-use; a bed under everything
+  narration: null             # script or TTS (Kokoro via /media-use); lock scene times to the audio
+  avatar: null                # talking-head lip-synced to narration; /talking-head-recut
+  subtitles: false            # from the narration transcript (WhisperX via /media-use) or /embedded-captions

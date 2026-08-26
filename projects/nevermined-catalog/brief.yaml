@@ -1,0 +1,38 @@
+id: nevermined-catalog
+mode: silent-demo
+audience: developers evaluating the Nevermined AI Services catalog
+message: "A public catalog of pay-per-call AI Services — browse, filter, and call any of them with one API key"
+cta:
+  title: "Explore the catalog"
+  url: "nevermined.app/catalog"
+duration_target_seconds: 26
+brand: nevermined
+
+capture:
+  url: "https://nevermined.app/catalog"
+  start_command: null
+  viewport: "1600x900"
+  url_label: "nevermined.app/catalog"
+
+beats:
+  - label: "Browse 149 AI Services"
+    at_seconds: 0.3
+  - label: "Filter by category"
+    at_seconds: 7.5
+  - label: "Inspect a service"
+    at_seconds: 13.8
+
+approved_claims:
+  - "149 curated services"
+  - "one API key"
+  - "no checkout"
+  - "pay-per-call"
+
+outputs:
+  - profile: docs-16x9
+
+audio:
+  music: null
+  narration: null
+  avatar: null
+  subtitles: false

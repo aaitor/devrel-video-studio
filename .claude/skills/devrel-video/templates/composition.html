@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <!--
+      TEMPLATE — fill every {{PLACEHOLDER}}. Timing model:
+        title card:  0 → 3.0s
+        footage:     data-start 3.0, data-duration {{FOOTAGE_DURATION}}  (from ffprobe of capture.mp4)
+        chapters:    data-start = 3.0 + (capture-beat time)      ← sync to the beats you recorded
+        CTA:         starts ~0.2s before footage ends, {{TOTAL}} = 3.0 + {{FOOTAGE_DURATION}} + 2.6
+      ponytail: GSAP + font load from CDN below — VENDOR both for confidential/production (guide §5.5/§14.5).
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family={{FONT}}:wght@400;500;600;700;800&display=block" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        /* from brands/<name>/tokens.json — Nevermined defaults shown */
+        --teal: {{TEAL}};        /* #0d3f48 */
+        --teal-dark: {{TEAL_DARK}}; /* #082826 */
+        --mint: {{MINT}};        /* #12968c */
+        --lime: {{LIME}};        /* #d7f771 */
+        --muted: {{MUTED}};      /* #9fb7b0 */
+        --line: #e3e7f0;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--teal-dark); }
+      body { font-family: "{{FONT}}", system-ui, sans-serif; color: #fff; -webkit-font-smoothing: antialiased; }
+      .fill { position: absolute; inset: 0; }
+      .center { display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
+      .bg { background: radial-gradient(1200px 720px at 50% 30%, var(--teal) 0%, var(--teal-dark) 72%); }
+      .wordmark { color: #fff; display: block; }
+
+      .kicker { font-size: 24px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--lime); margin: 30px 0 22px; }
+      .t-title { font-size: 96px; font-weight: 800; line-height: 1.03; letter-spacing: -.02em; max-width: 1350px; }
+      .t-title .hl { color: var(--lime); }
+      .t-sub { font-size: 38px; font-weight: 400; color: var(--muted); margin-top: 30px; }
+
+      #frame { position: absolute; left: 240px; top: 115px; width: 1440px; height: 850px; background: #fff; border-radius: 16px; box-shadow: 0 40px 120px rgba(0,0,0,.5); z-index: 2; }
+      .bar { height: 40px; display: flex; align-items: center; gap: 8px; padding: 0 16px; background: #f1f3f8; border-radius: 16px 16px 0 0; border-bottom: 1px solid var(--line); }
+      .dot { width: 11px; height: 11px; border-radius: 50%; }
+      .url { margin-left: 14px; font-size: 15px; color: #5b647c; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 4px 14px; font-weight: 500; }
+      #a-roll { position: absolute; left: 240px; top: 155px; width: 1440px; height: 810px; object-fit: cover; background: #fff; border-radius: 0 0 16px 16px; z-index: 3; }
+
+      .chapter { position: absolute; left: 240px; top: 995px; height: 50px; display: flex; align-items: center; gap: 14px; padding: 0 26px; background: rgba(8,40,38,.9); border: 1px solid rgba(18,150,140,.55); border-radius: 999px; font-size: 27px; font-weight: 600; z-index: 6; }
+      .chapter .d { width: 11px; height: 11px; border-radius: 50%; background: var(--lime); }
+      #brandmark { position: absolute; right: 244px; top: 1008px; z-index: 6; opacity: .9; }
+
+      .cta-title { font-size: 88px; font-weight: 800; letter-spacing: -.02em; }
+      .cta-url { margin-top: 26px; font-size: 40px; font-weight: 600; color: var(--lime); }
+    </style>
+  </head>
+  <body>
+    <!-- {{LOGO_SYMBOL}}: paste the contents of brands/<name>/logo.svg here as one
+         <symbol id="brand-logo" viewBox="0 0 178 21" fill="currentColor"> … paths … </symbol>
+         wrapped in: <svg width="0" height="0" style="position:absolute" aria-hidden="true"> … </svg> -->
+
+    <div id="root" data-composition-id="main" data-start="0" data-duration="{{TOTAL}}" data-width="1920" data-height="1080">
+
+      <div id="bg" class="clip fill bg" data-start="0" data-duration="{{TOTAL}}" data-track-index="0" style="z-index:0"></div>
+
+      <!-- Scene 1 — title -->
+      <div id="title" class="clip fill center bg" data-start="0" data-duration="3.05" data-track-index="1" style="z-index:5">
+        <svg class="wordmark" width="300" height="35" style="margin-bottom:10px"><use href="#brand-logo" /></svg>
+        <div class="kicker">{{KICKER}}</div>
+        <div class="t-title">{{TITLE_HTML}}</div> <!-- wrap the key phrase in <span class="hl">…</span> -->
+        <div class="t-sub">{{SUBTITLE}}</div>     <!-- only approved claims (numbers/names from the captured page) -->
+      </div>
+
+      <!-- Scene 2 — framed product footage -->
+      <div id="frame" class="clip" data-start="3.0" data-duration="{{FOOTAGE_DURATION}}" data-track-index="1">
+        <div class="bar">
+          <span class="dot" style="background:#ff5f57"></span>
+          <span class="dot" style="background:#febc2e"></span>
+          <span class="dot" style="background:#28c840"></span>
+          <span class="url">{{URL_LABEL}}</span>
+        </div>
+      </div>
+      <video id="a-roll" class="clip" src="capture.mp4" muted playsinline data-start="3.0" data-duration="{{FOOTAGE_DURATION}}" data-track-index="0"></video>
+      <svg id="brandmark" class="clip wordmark" width="176" height="21" data-start="3.0" data-duration="{{FOOTAGE_DURATION}}" data-track-index="2"><use href="#brand-logo" /></svg>
+
+      <!-- chapter lower-thirds — data-start = 3.0 + capture-beat time; give each a unique id -->
+      <div id="ch1" class="clip chapter" data-start="{{CH1_START}}" data-duration="{{CH1_DUR}}" data-track-index="3"><span class="d"></span> {{CH1_LABEL}}</div>
+      <div id="ch2" class="clip chapter" data-start="{{CH2_START}}" data-duration="{{CH2_DUR}}" data-track-index="3"><span class="d"></span> {{CH2_LABEL}}</div>
+      <div id="ch3" class="clip chapter" data-start="{{CH3_START}}" data-duration="{{CH3_DUR}}" data-track-index="3"><span class="d"></span> {{CH3_LABEL}}</div>
+
+      <!-- Scene 3 — CTA -->
+      <div id="cta" class="clip fill center bg" data-start="{{CTA_START}}" data-duration="2.6" data-track-index="4" style="z-index:8">
+        <svg class="wordmark" width="300" height="35" style="margin-bottom:34px"><use href="#brand-logo" /></svg>
+        <div class="cta-title">{{CTA_TITLE}}</div>
+        <div class="cta-url">{{CTA_URL}}</div>
+      </div>
+
+      <!-- ==================== ROADMAP SEAMS (not built yet — see references/production-notes.md) ====================
+        MUSIC:     <audio class="clip" src="music.mp3" data-start="0" data-duration="{{TOTAL}}" data-track-index="9" data-volume="0.55"></audio>
+                   source via /media-use; keep it a bed. If NARRATION exists, duck it with /hyperframes-audio (voiceover carve).
+        NARRATION: <audio class="clip" src="narration.wav" data-start="0" data-duration="{{TOTAL}}" data-track-index="10" data-volume="1"></audio>
+                   TTS via /media-use (Kokoro) or recorded VO. Lock SCENE/CHAPTER times to the audio, not the reverse.
+        AVATAR:    <video id="avatar" class="clip" src="avatar.mp4" muted playsinline data-start="3.0" data-duration="{{FOOTAGE_DURATION}}" data-track-index="11"
+                     style="position:absolute; right:60px; bottom:120px; width:360px; border-radius:16px; z-index:7"></video>
+                   talking-head lip-synced to NARRATION; see /talking-head-recut (+ HeyGen avatar).
+        SUBTITLES: caption lines from the narration transcript (whisper/WhisperX via /media-use), or use /embedded-captions.
+      ============================================================================================================= -->
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from("#title .wordmark", { opacity: 0, scale: 0.92, duration: 0.6 }, 0.0);
+      tl.from("#title .kicker",   { opacity: 0, y: -18, duration: 0.6 }, 0.25);
+      tl.from("#title .t-title",  { opacity: 0, y: 34, duration: 0.7 }, 0.45);
+      tl.from("#title .t-sub",    { opacity: 0, y: 20, duration: 0.6 }, 0.8);
+      tl.from("#frame",  { opacity: 0, scale: 0.95, duration: 0.6 }, 3.0);
+      tl.from("#a-roll", { opacity: 0, scale: 0.95, duration: 0.6 }, 3.0);
+      tl.from("#brandmark", { opacity: 0, duration: 0.5 }, 3.3);
+      tl.from("#ch1", { opacity: 0, x: -26, duration: 0.5 }, {{CH1_ANIM}});
+      tl.from("#ch2", { opacity: 0, x: -26, duration: 0.5 }, {{CH2_ANIM}});
+      tl.from("#ch3", { opacity: 0, x: -26, duration: 0.5 }, {{CH3_ANIM}});
+      tl.from("#cta .wordmark",  { opacity: 0, y: 22, duration: 0.5 }, {{CTA_START}});
+      tl.from("#cta .cta-title", { opacity: 0, y: 28, duration: 0.6 }, {{CTA_START}}+0.15);
+      tl.from("#cta .cta-url",   { opacity: 0, y: 20, duration: 0.6 }, {{CTA_START}}+0.4);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

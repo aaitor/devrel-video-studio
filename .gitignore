@@ -1,0 +1,21 @@
+# dependencies / tool caches
+node_modules/
+.pw/
+.playwright-cli/
+.hyperframes/
+hyperframes.lock.json
+
+# generated media (keep source: index.html, capture.js, brief.yaml, tokens.json, logo.svg)
+*.webm
+*.mp4
+**/renders/*
+!**/renders/contact-sample.png
+
+# secrets / state
+.env
+.env.*
+.secrets/
+*storage-state*.json
+
+# os
+.DS_Store
