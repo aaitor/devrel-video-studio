@@ -94,8 +94,9 @@
       </div>
 
       <!-- ==================== ROADMAP SEAMS (not built yet — see references/production-notes.md) ====================
-        MUSIC:     <audio class="clip" src="music.mp3" data-start="0" data-duration="{{TOTAL}}" data-track-index="9" data-volume="0.55"></audio>
-                   source via /media-use; keep it a bed. If NARRATION exists, duck it with /hyperframes-audio (voiceover carve).
+        MUSIC:     <audio id="bgm" class="clip" src="bgm.mp3" data-start="0" data-duration="{{TOTAL}}" data-track-index="9" data-volume="0.85"></audio>
+                   local bed: scripts/gen-bgm.py bed.wav → ffmpeg -i bed.wav bgm.mp3. Or /media-use resolve --type bgm.
+                   Keep it a bed; if NARRATION exists, lower data-volume and duck via /hyperframes-audio.
         NARRATION: <audio class="clip" src="narration.wav" data-start="0" data-duration="{{TOTAL}}" data-track-index="10" data-volume="1"></audio>
                    TTS via /media-use (Kokoro) or recorded VO. Lock SCENE/CHAPTER times to the audio, not the reverse.
         AVATAR:    <video id="avatar" class="clip" src="avatar.mp4" muted playsinline data-start="3.0" data-duration="{{FOOTAGE_DURATION}}" data-track-index="11"

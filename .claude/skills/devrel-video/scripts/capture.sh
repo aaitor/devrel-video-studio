@@ -31,5 +31,8 @@ playwright-cli run-code --filename="$HEROFILE"
 playwright-cli close  >/dev/null 2>&1
 
 [ -f capture.webm ] || { echo "ERROR: hero script did not produce capture.webm"; exit 1; }
-ffmpeg -v error -y -i capture.webm -c:v libx264 -pix_fmt yuv420p -movflags +faststart capture.mp4
+# Dense keyframes (-g 30 -keyint_min 30 -sc_threshold 0 at -r 30): HyperFrames seeks every frame,
+# and a sparse GOP freezes footage frames between keyframes during the render.
+ffmpeg -v error -y -i capture.webm -c:v libx264 -r 30 -g 30 -keyint_min 30 -sc_threshold 0 \
+  -pix_fmt yuv420p -movflags +faststart capture.mp4
 echo "wrote $HERODIR/capture.mp4 ($(ffprobe -v error -show_entries format=duration -of csv=p=0 capture.mp4)s)"

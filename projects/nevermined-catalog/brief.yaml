@@ -32,7 +32,7 @@ outputs:
   - profile: docs-16x9
 
 audio:
-  music: null
+  music: bgm.mp3   # local synth bed via scripts/gen-bgm.py
   narration: null
   avatar: null
   subtitles: false

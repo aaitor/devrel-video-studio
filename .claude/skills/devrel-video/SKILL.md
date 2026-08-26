@@ -45,6 +45,13 @@ Copy `templates/hero-script.js` → `capture.js`; edit the beats (eased `scrollT
 `hyperframes init projects/<slug> --video capture.mp4 --skip-transcribe --non-interactive`, then replace `index.html` with `templates/composition.html`, filled from the brief + tokens:
 title card (real claims) → footage in a browser frame → chapter lower-thirds synced to the capture beats (+ the title-card offset) → CTA. Give **every animated element a stable `id`** (GSAP and lint both require it).
 
+### 5.5 · Music (optional)
+Local, license-clean bed — no auth, no model:
+`python3 .claude/skills/devrel-video/scripts/gen-bgm.py bed.wav && ffmpeg -i bed.wav -b:a 192k projects/<slug>/bgm.mp3`,
+then add the `<audio id="bgm" class="clip" src="bgm.mp3" … data-track-index="9" data-volume="0.85">` seam to the
+composition (lower the volume under narration). For a produced track: `/media-use resolve --type bgm`
+(HeyGen catalog — needs `heygen` sign-in) or `--local-only` (MusicGen), dropped into the same seam.
+
 ### 6 · Render + QA → `projects/<slug>/renders/`
 `scripts/render-qa.sh projects/<slug>` → high master + web-compressed copy + ffprobe + contact sheet. Gates before "done":
 - `hyperframes lint` 0 errors · `hyperframes check` passes (Contrast AA).
@@ -65,4 +72,4 @@ title card (real claims) → footage in a browser frame → chapter lower-thirds
 
 ## Not built yet
 
-Music bed · background narration · talking-head avatar · subtitles. See `references/production-notes.md → Roadmap` — each has a commented seam in `templates/composition.html` and a field in `brief.yaml`.
+Background narration · talking-head avatar · subtitles (music is supported — step 5.5). See `references/production-notes.md → Roadmap` — each has a seam in `templates/composition.html` and a field in `brief.yaml`.

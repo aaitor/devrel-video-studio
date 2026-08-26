@@ -678,7 +678,7 @@ async page => {
 
 The `mark()` helper should write event name plus elapsed capture time to `markers.json`. Do not rely on hard-coded edit timestamps when a semantic marker can be captured.
 
-Run the hero script with the locally-installed binary — `playwright-cli run-code --filename=capture.js` after a `playwright-cli open`, in the same shell so the session persists — and export `PLAYWRIGHT_MCP_SANDBOX=false` first on AppArmor-restricted hosts. Then convert the resulting WebM to MP4 before HyperFrames embeds it: `ffmpeg -i raw/create-plan.webm -c:v libx264 -pix_fmt yuv420p -movflags +faststart raw/create-plan.mp4`.
+Run the hero script with the locally-installed binary — `playwright-cli run-code --filename=capture.js` after a `playwright-cli open`, in the same shell so the session persists — and export `PLAYWRIGHT_MCP_SANDBOX=false` first on AppArmor-restricted hosts. Then convert the resulting WebM to MP4 with **dense keyframes** before HyperFrames embeds it — the renderer seeks every frame, and a sparse GOP freezes footage frames mid-scroll: `ffmpeg -i raw/create-plan.webm -c:v libx264 -r 30 -g 30 -keyint_min 30 -sc_threshold 0 -pix_fmt yuv420p -movflags +faststart raw/create-plan.mp4`.
 
 ### 10.3 Quick documentation capture
 
