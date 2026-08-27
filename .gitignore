@@ -19,5 +19,8 @@ hyperframes.lock.json
 .secrets/
 *storage-state*.json
 
+# internal / not-public working material (kept local, never committed to this public repo)
+demo-scripts/
+
 # os
 .DS_Store

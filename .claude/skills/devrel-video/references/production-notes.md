@@ -48,8 +48,10 @@ Each has a commented seam in `templates/composition.html` and a field in `brief.
 2. **Background narration (2a).** ✅ Supported. TTS each beat line with `scripts/tts.sh` in a **voice that
    matches the presenter** (Orpheus on Melkor — male `leo`/`dan`/`zac`, female `leah`/`tara`/`jess`/`mia`/`zoe`;
    restart `start_orpheus_stack.sh` if it 502s — post-reboot it can segfault at slot-init, see the
-   `orpheus-tts-melkor` memory). Changing the voice later is a FULL re-gen (re-TTS → narrate.py → re-time →
-   mix → re-lip-sync the avatar bubbles against the new voice). `templates/narrate.py` measures the lines, **derives the scene/chapter
+   `orpheus-tts-melkor` memory). Changing the voice later is one command — `scripts/variant.sh <project> <voice>`
+   (re-TTS → narrate.py → `retime.py` auto-applies the new `timing.json` to index.html → mix → re-lip-sync the
+   avatar bubbles → `renders/out-<voice>.mp4`; `--no-avatar` skips the GPU step). `retime.py` is idempotent and
+   keys off element ids/GSAP selectors, so it's safe to re-run for any voice. `templates/narrate.py` measures the lines, **derives the scene/chapter
    times from the audio** (never the reverse), writes `voice.wav`, and re-times `captions.<lang>.srt` to the
    voice. Retime the composition to those numbers (a 26s silent cut → ~31s), then `scripts/mix-audio.sh`
    ducks the music bed under the voice and masters to −16 LUFS. Clean text first (no parens/version numbers;

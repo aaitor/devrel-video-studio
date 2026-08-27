@@ -49,7 +49,7 @@ Copy `templates/hero-script.js` → `capture.js`; edit the beats (eased `scrollT
 title card (real claims) → footage in a browser frame → chapter lower-thirds synced to the capture beats (+ the title-card offset) → CTA. Give **every animated element a stable `id`** (GSAP and lint both require it).
 
 ### 5.4 · Narration (optional — drives the timeline)
-For a narrated cut the **voice sets the timing.** Write ~1 line per beat (clean text: no parens/version numbers, em-dash → comma). Synth each with Orpheus in a **voice that matches the presenter** — male `leo`/`dan`/`zac`, female `leah`/`tara`/`jess`/`mia`/`zoe` (offer samples if unsure): `scripts/tts.sh "<line>" vo1.wav <voice>` (Melkor `orpheus-tts`; restart its stack if it 502s). Then adapt `templates/narrate.py` (footage length, beat times, line texts) — it measures the lines, computes scene/chapter times, writes `voice.wav`, and **re-times `captions.<lang>.srt` to the voice**. Retime the composition to those numbers (total tracks the voice — a snappier voice yields a shorter cut; use a guarded find/replace on the timing tokens), mix (next step), render. **Changing the voice later = full re-gen** (re-TTS → narrate.py → re-time → mix → re-lip-sync the avatar bubbles). `narrated-devrel` mode.
+For a narrated cut the **voice sets the timing.** Write ~1 line per beat (clean text: no parens/version numbers, em-dash → comma). Synth each with Orpheus in a **voice that matches the presenter** — male `leo`/`dan`/`zac`, female `leah`/`tara`/`jess`/`mia`/`zoe` (offer samples if unsure): `scripts/tts.sh "<line>" vo1.wav <voice>` (Melkor `orpheus-tts`; restart its stack if it 502s). Then adapt `projects/<slug>/narrate.py` (copy the template — footage length, beat times, `SPOKEN` lines, captions) — it measures the lines, computes scene/chapter times, and writes `voice.wav`, re-timed `captions.<lang>.srt`, and **`timing.json`**. Apply that timing to the composition with **`scripts/retime.py projects/<slug>`** (idempotent — rewrites every `data-start`/`data-duration` + GSAP position by id, so total tracks the voice), then mix (next step), render. **Swapping the voice later is one command:** `scripts/variant.sh projects/<slug> <voice>` runs the whole chain — re-TTS → narrate → retime → mix → re-lip-sync the avatar bubbles (if any) → render → `renders/out-<voice>.mp4` (add `--no-avatar` to skip the GPU step). `narrated-devrel` mode.
 
 ### 5.5 · Music (optional)
 Local, license-clean bed — no auth, no model:
@@ -80,6 +80,8 @@ A **face-only circular bubble**, lip-synced, shown ONLY at intro / one transitio
 | Composition + render | HyperFrames + `templates/composition.html` |
 | Creative direction (promo) | `/product-launch-video`, `/hyperframes-creative` |
 | Audio (music/SFX/voice) + captions | `/media-use`, `/hyperframes-audio` |
+| Narration timing → composition | `templates/narrate.py` (writes `timing.json`) + `scripts/retime.py` |
+| Swap the narration voice (whole re-gen) | `scripts/variant.sh <project> <voice>` |
 | Master / convert / QA | FFmpeg / ffprobe (`scripts/render-qa.sh`) |
 
 ## Roadmap

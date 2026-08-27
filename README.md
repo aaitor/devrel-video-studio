@@ -34,7 +34,7 @@ Paste any of these to Claude Code:
 **Without a talking head** (silent or voiceover only):
 - **Silent tour** — `use /devrel-video to make a silent walkthrough of https://nevermined.app/catalog, showing browse → filter by category → open a service`
 - **Narrated** — `use /devrel-video for https://nevermined.app/catalog: narrated walkthrough (male voice) + background music + English & Spanish subtitles`
-- **Pick / swap the voice** — `…narrate it with voice dan`, or later `regenerate nevermined-catalog with voice leah` — the voice is a prompt parameter; each one is a new variant (male leo/dan/zac, female leah/tara/jess/mia/zoe — match the presenter)
+- **Pick / swap the voice** — `…narrate it with voice dan`, or later `regenerate nevermined-catalog with voice leah` — the voice is a prompt parameter; each is a new variant (male leo/dan/zac, female leah/tara/jess/mia/zoe — match the presenter). Under the hood one command does it all: `scripts/variant.sh projects/<slug> <voice>` (re-TTS → auto-retime → mix → re-lip-sync the avatar → render) → `renders/out-<voice>.mp4`
 - **Reuse a brand** — `use /devrel-video for https://nevermined.app/pricing using the nevermined brand; show the plan comparison then the checkout`
 - **New brand** — `use /devrel-video for https://acme.com/app — extract the acme brand first, then walk sign-up → dashboard`
 - **Local product** — `use /devrel-video on my local app at http://localhost:3000 (start: npm run dev): sign-up → create a project → invite a teammate`
