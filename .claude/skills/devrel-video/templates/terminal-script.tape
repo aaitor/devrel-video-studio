@@ -6,6 +6,8 @@
 #   • Record in a clean throwaway dir: the host path shows in the prompt line AND in tool calls.
 #   • `unset CLAUDE_CODE_CHILD_SESSION` — else a nested run shows "transcript saving is off …".
 #   • Escape after the turn — dismisses onboarding popups ("Teach auto mode about your environment?").
+#     A late popup can still flash at the very tail (Escape doesn't always land first). If a capture catches
+#     one, cap that beat's data-duration in the composition to just BEFORE it — deterministic, no re-capture.
 #   • The "N MCP servers need authentication" line comes from your GLOBAL config — the launch line below
 #     hides it by aliasing `claude` to `claude --strict-mcp-config` (ignores all other MCP config). The alias
 #     is defined in the hidden section, so the RECORDED command stays a clean `claude`, not the flag.
