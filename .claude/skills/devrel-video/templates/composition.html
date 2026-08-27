@@ -118,6 +118,40 @@
         SUBTITLES: ship captions.<lang>.srt alongside the video (soft, toggleable, one per language) — scripts/subtitles.sh
                    burns a hard social cut. From narration: transcript via /media-use (WhisperX). Or author cues to the beats.
       ============================================================================================================= -->
+
+      <!-- ==================== MULTI-ENVIRONMENT (terminal ⇄ browser) — see SKILL §5.8 ====================
+        A demo can move between the browser and the CLI (Claude Code): prompt in the terminal → switch to the
+        product in the browser → back to the terminal. Capture each terminal beat with scripts/capture-terminal.sh
+        (VHS renders the real Claude Code TUI headlessly → term<N>.mp4). Then place beats as SEQUENTIAL timeline
+        clips and hand off by fading each beat DOWN to opacity 0 — the teal .bg shows through, which IS a fade
+        through the brand colour (a pure crossfade ghosts terminal text through the page; fading over .bg doesn't).
+
+        (A) Terminal-frame chrome — the browser #frame, re-skinned dark. Add to <style>:
+            .terminal-frame { position:absolute; left:240px; top:115px; width:1440px; height:850px;
+                background:#0d1117; border-radius:16px; box-shadow:0 40px 120px rgba(0,0,0,.5); z-index:2; }
+            .terminal-frame .bar { background:#161b22; border-bottom:1px solid #30363d; }
+            .terminal-frame .bar .label { margin-left:14px; font-size:15px; color:#8b949e; font-weight:500; } /* "claude — ~/demo" */
+            .term-video { position:absolute; left:240px; top:155px; width:1440px; height:810px; object-fit:cover;
+                background:#0d1117; border-radius:0 0 16px 16px; z-index:3; }
+
+        (B) Timeline — beats back-to-back, each overlapping the next by ~0.7s so the hand-off has room:
+            <div id="t1-frame" class="clip terminal-frame" data-start="3.0" data-duration="12.0" data-track-index="1">
+              <div class="bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span>
+                   <span class="dot" style="background:#28c840"></span><span class="label">claude — ~/demo</span></div></div>
+            <video id="t1" class="clip term-video" src="term1.mp4" muted playsinline data-start="3.0" data-duration="12.0" data-track-index="0"></video>
+            <!-- browser beat: the existing #frame + #a-roll, starting at 3.0 + 12.0 − 0.7 = 14.3 -->
+            <!-- terminal beat 2: another .terminal-frame + .term-video, overlapping the browser's end likewise -->
+
+        (C) Hand-off (per seam at time S; 0.35s down through teal + 0.45s up with a scale-pop — the eased fade the
+            browser cut uses). Give every clip a stable id:
+            tl.to("#t1-frame",{opacity:0,duration:0.35}, S-0.35); tl.to("#t1",{opacity:0,duration:0.35}, S-0.35);
+            tl.from("#frame",{opacity:0,scale:0.96,duration:0.45}, S); tl.from("#a-roll",{opacity:0,scale:0.96,duration:0.45}, S);
+
+        RE-ENACTMENT option (deterministic, no capture, no model): instead of a captured .term-video, type on a
+        styled HTML terminal — <div class="clip cc-terminal">…<span class="prompt">›</span> your prompt…</div> — and
+        reveal lines with GSAP on the timeline. Pixel-perfect, re-times to narration, zero PII; you author the text.
+        QUICK PREVIEW without composing: scripts/stitch-envs.sh out.mp4 082826 term1.mp4 capture.mp4 term2.mp4
+      ============================================================================================================= -->
     </div>
 
     <script>

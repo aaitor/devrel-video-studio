@@ -29,13 +29,15 @@ flags the script tag on purpose). For a confidential render:
 - Inter → drop `.woff2` files in the project and add `@font-face` rules; remove the Google Fonts `<link>`.
 - Re-run the §14.5 check: no remote `<script>`, `<link>`, font, or media reference survives.
 
-## Two capture modes (pick by intent)
+## Capture modes (pick by intent)
 
 - **Interaction walkthrough** (default): Playwright `page.screencast` — shows the product being *used*.
 - **Static showcase**: `hyperframes capture <URL>` — screenshots + brand tokens, camera over stills
   (this is what `/product-launch-video` uses, and how `brand-extract.sh` pulls tokens + logo).
+- **Terminal / Claude Code**: `scripts/capture-terminal.sh <tape>` — VHS renders the real CLI TUI headlessly
+  (feature 5 below). Combine with the browser modes for a multi-environment demo.
 
-## Roadmap — the four next features
+## Production features (all supported)
 
 Each has a commented seam in `templates/composition.html` and a field in `brief.yaml`.
 
@@ -84,6 +86,33 @@ Each has a commented seam in `templates/composition.html` and a field in `brief.
    `/media-use`, word-level timing) instead of authoring, or hand off to `/embedded-captions`. Keep a
    terminology dictionary (product names, protocols like x402/MPP) and proofread. "Alternative subtitles"
    = multiple language `.srt` from the same cues.
+5. **Multi-environment — terminal ⇄ browser.** ✅ Supported. A demo can move between the CLI (Claude Code)
+   and the browser (prompt in Claude Code → the product in the browser → back). Capture terminal beats with
+   `scripts/capture-terminal.sh <tape>` → **VHS** (`.tape` is to the terminal what `hero-script.js` is to the
+   browser) renders the **real Claude Code TUI headlessly** to `term<N>.mp4`. Spike facts:
+   - **Fidelity is perfect.** The full-screen TUI (logo, welcome box, highlighted prompt bar, streamed answer,
+     `✻ Cooked for 2s`, menu popups) renders pixel-perfect — the alt-screen/redraw worry was unfounded. VHS's
+     bundled headless chromium **launched clean on this AppArmor/Wayland host — no `--no-sandbox` needed** (unlike
+     Playwright capture). Real `claude` calls work from inside VHS (auth inherited, cheap).
+   - **Sanitation is mandatory — the terminal's "no-PII" gate.** A raw take leaked the cwd path, `N MCP servers
+     need authentication`, the `CLAUDE_CODE_CHILD_SESSION` "transcript saving is off" warning, git branch, plan
+     name, and a surprise "Teach auto mode about your environment?" popup. The template tape fixes it: record in a
+     **clean throwaway dir**, `unset CLAUDE_CODE_CHILD_SESSION`, `Escape` popups. (MCP-auth line is global config —
+     thematically fine for an MCP demo, or start Claude with a clean config dir.)
+   - **Live = non-deterministic.** Wording *and* surprise popups vary run to run. Two paths — **support both**:
+     (a) **capture** a real session (VHS scripted, or `asciinema rec` + `agg` render for a free-form take) —
+     authentic; (b) **re-enact** with the HTML-terminal seam (a styled `.cc-terminal` typed on by GSAP) —
+     deterministic, re-times to narration, zero PII, you author the text.
+   - **Smooth hand-off = fade through the brand teal.** Place beats as sequential timeline clips with
+     terminal-/browser-frame chrome and fade each **down to the `.bg`** (the composition already fades scenes over
+     it). A pure crossfade is **muddy** (terminal text ghosts through the page); fade-through-**black** is clean but
+     off-brand; fade-through-**teal** is clean *and* on-brand, and the GSAP version adds the scale-pop. Quick
+     non-composition preview: `scripts/stitch-envs.sh out.mp4 082826 term1.mp4 capture.mp4 term2.mp4`. Worked
+     example: `projects/nevermined-cli-tour/`. Match VHS `Set Width/Height` to the browser viewport (1600×900) so
+     beats stitch without letterboxing.
+   - **Tooling (one-time, `scripts/capture-terminal.sh` self-installs vhs+ttyd):** `go install github.com/charmbracelet/vhs@latest`;
+     ttyd static binary from `tsl0922/ttyd` releases; ffmpeg (present). Free-form path: `asciinema` (pip) + `agg`
+     (`cargo install --git https://github.com/asciinema/agg agg`, needs rustc ≥1.86 — use `+stable` if your default is older).
 
-Dependency order: **narration → avatar**; subtitles and music are independent (author subtitles to the
-beats now; re-time them to the narration transcript when it exists).
+Dependency order: **narration → avatar**; subtitles, music, and multi-environment are independent (author
+subtitles to the beats now; re-time them to the narration transcript when it exists).

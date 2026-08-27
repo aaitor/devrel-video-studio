@@ -44,6 +44,10 @@ Paste any of these to Claude Code:
 - **Avatar at intro only** — `…add my talking-head only at the intro, then let the product run full-screen` (plate as above)
 - **Pick the voice** — `…use a male voice — show me leo / dan / zac samples first` (the voice should match the presenter's)
 
+**Terminal + browser** (multi-environment — the demo switches between Claude Code and the web):
+- **CLI → browser → CLI** — `use /devrel-video for a tour that starts in Claude Code (prompt: "find me an AI weather agent I can call and pay for"), switches to nevermined.app/catalog, then back to Claude Code to pay it over MCP` — terminal beats are captured as real, sanitized Claude Code sessions; beats hand off with a smooth fade through the brand colour. See [`projects/nevermined-cli-tour/`](projects/nevermined-cli-tour/).
+- **All in Claude Code** — `…make it entirely inside a Claude Code session — no browser` (one terminal frame for the whole runtime)
+
 **Tweaks** (either mode):
 - **Pin an element** — `…open the AgentOracle service specifically` (exact `a[href="…"]` in `capture.js`, no fallback)
 - **Re-render** — `re-render nevermined-catalog with a slower detail scroll and a "Read the docs" CTA`
@@ -61,8 +65,8 @@ See its README for the exact commands used.
 
 Music, narration (Orpheus TTS — male `leo`/`dan`/`zac` or female `leah`/`tara`/`jess`/`mia`/`zoe`; match it to
 your presenter), a **face-only presenter avatar** (LatentSync on Melkor's AMD GPU, lip-synced, shown briefly at
-intro/CTA), and multi-language subtitles — steps 5.4–5.7 of the skill. Still on the roadmap: portrait/social
-output profiles. Details in
+intro/CTA), multi-language subtitles, and **multi-environment demos** that switch between Claude Code (terminal)
+and the browser — steps 5.4–5.8 of the skill. Still on the roadmap: portrait/social output profiles. Details in
 [`.claude/skills/devrel-video/references/production-notes.md`](.claude/skills/devrel-video/references/production-notes.md).
 
 ## Talking-head avatar (bring your own)

@@ -1,6 +1,7 @@
 # dependencies / tool caches
 node_modules/
 .pw/
+.vhs/
 .playwright-cli/
 .hyperframes/
 hyperframes.lock.json

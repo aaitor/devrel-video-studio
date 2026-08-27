@@ -1,0 +1,51 @@
+id: nevermined-cli-tour
+mode: silent-demo
+audience: developers who drive their workflow from Claude Code / the CLI
+message: "Discover and pay for an AI agent without leaving your terminal — Claude Code drives it, the browser just confirms it"
+cta:
+  title: "Build agents that pay each other"
+  url: "nevermined.app"
+duration_target_seconds: 45
+brand: nevermined
+
+# Browser beat of the tour (the middle environment).
+capture:
+  url: "https://nevermined.app/catalog"
+  start_command: null
+  viewport: "1600x900"
+  url_label: "nevermined.app/catalog"
+
+# The tour moves CLI → browser → CLI. Terminal beats are real, sanitized Claude Code sessions (VHS).
+environments:
+  - kind: terminal
+    tape: intro.tape
+    prompt: "Find me an AI weather agent I can call and pay for"
+  - kind: browser
+    url: "https://nevermined.app/catalog"
+  - kind: terminal
+    tape: pay.tape
+    prompt: "Now pay that agent 0.05 USDC over MCP and show me the receipt"
+terminal:
+  demo_dir: ~/nevermined-demo   # a CLEAN throwaway dir — keeps host paths out of the frame
+
+beats:
+  - label: "Ask Claude Code"
+    at_seconds: 0.3
+  - label: "Browse the catalog"
+    at_seconds: 12.0
+  - label: "Pay over MCP"
+    at_seconds: 24.0
+
+approved_claims:
+  - "pay-per-call"
+  - "one API key"
+
+outputs:
+  - profile: docs-16x9
+
+audio:
+  music: null
+  narration: null   # add a male voice (leo/dan/zac) to match the presenter — see SKILL §5.4
+  avatar: null
+  avatar_plate: null
+  subtitles: []

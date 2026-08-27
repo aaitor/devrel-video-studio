@@ -15,6 +15,22 @@ capture:
   viewport: "1600x900"
   url_label: "example.com/app"  # shown in the browser-frame address bar
 
+# Multi-environment (optional) — a demo can switch between the CLI (Claude Code) and the browser.
+# Omit for a pure-browser video (the default). Order = on-screen order; beats hand off via a fade
+# through the brand teal (SKILL §5.8). Terminal beats: scripts/capture-terminal.sh <tape> → term<N>.mp4.
+environments: []              # e.g.:
+  # - kind: terminal          #   Claude Code TUI, recorded with VHS (scripts/capture-terminal.sh)
+  #   tape: intro.tape        #   copy templates/terminal-script.tape; set {{DEMO_DIR}} + {{PROMPT}}
+  #   prompt: "Find me an AI weather agent I can call and pay for"
+  # - kind: browser           #   the capture: block above (scripts/capture.sh)
+  #   url: "https://nevermined.app/catalog"
+  # - kind: terminal
+  #   tape: pay.tape
+  #   prompt: "Now pay that agent 0.05 USDC over MCP and show me the receipt"
+terminal:
+  demo_dir: null              # e.g. ~/nevermined-demo — a CLEAN throwaway dir to record in (host paths
+                              # show in the prompt + tool calls). Sanitation lives in the .tape (see template).
+
 # Each beat becomes a chapter lower-third. chapter data-start = 3.0 (title) + at_seconds.
 beats:
   - label: "First thing you see"
