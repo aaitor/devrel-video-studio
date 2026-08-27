@@ -97,8 +97,9 @@ Each has a commented seam in `templates/composition.html` and a field in `brief.
    - **Sanitation is mandatory — the terminal's "no-PII" gate.** A raw take leaked the cwd path, `N MCP servers
      need authentication`, the `CLAUDE_CODE_CHILD_SESSION` "transcript saving is off" warning, git branch, plan
      name, and a surprise "Teach auto mode about your environment?" popup. The template tape fixes it: record in a
-     **clean throwaway dir**, `unset CLAUDE_CODE_CHILD_SESSION`, `Escape` popups. (MCP-auth line is global config —
-     thematically fine for an MCP demo, or start Claude with a clean config dir.)
+     **clean throwaway dir**, `unset CLAUDE_CODE_CHILD_SESSION`, `Escape` popups, and alias `claude` to
+     `claude --strict-mcp-config` to drop the "N MCP servers need authentication" line (the alias is defined in the
+     tape's hidden section, so the recorded command stays a clean `claude`, not the flag).
    - **Live = non-deterministic.** Wording *and* surprise popups vary run to run. Two paths — **support both**:
      (a) **capture** a real session (VHS scripted, or `asciinema rec` + `agg` render for a free-form take) —
      authentic; (b) **re-enact** with the ready-made template `templates/cc-terminal.html` (a styled `.cc-terminal`

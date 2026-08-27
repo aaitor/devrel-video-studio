@@ -44,8 +44,8 @@ outputs:
   - profile: docs-16x9
 
 audio:
-  music: null
-  narration: null   # add a male voice (leo/dan/zac) to match the presenter — see SKILL §5.4
+  music: bgm.wav    # synth bed (scripts/gen-bgm.py), ducked under the voice in narration-mix.mp3
+  narration: leo    # Orpheus MALE voice; 4 lines placed at the beat starts (fixed clip lengths), ducked + -16 LUFS
   avatar: null
   avatar_plate: null
   subtitles: []

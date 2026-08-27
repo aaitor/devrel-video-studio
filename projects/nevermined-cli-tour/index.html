@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=1920, height=1080" />
     <!-- Multi-environment tour: Claude Code (terminal) → nevermined.app/catalog (browser) → Claude Code.
          Beats are ADJACENT (no overlap); each fades to/from the teal .bg = the fade-through-teal hand-off,
-         plus a scale-pop. ponytail: GSAP + Inter from CDN (draft) — vendor for confidential/production. -->
+         plus a scale-pop. Narrated (leo) over a ducked bed. ponytail: GSAP + Inter from CDN (draft). -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=block" rel="stylesheet" />
@@ -81,9 +81,12 @@
       </symbol>
     </svg>
 
-    <div id="root" data-composition-id="main" data-start="0" data-duration="53.23" data-width="1920" data-height="1080">
+    <div id="root" data-composition-id="main" data-start="0" data-duration="50.87" data-width="1920" data-height="1080">
 
-      <div id="bg" class="clip fill bg" data-start="0" data-duration="53.23" data-track-index="0" style="z-index:0"></div>
+      <div id="bg" class="clip fill bg" data-start="0" data-duration="50.87" data-track-index="0" style="z-index:0"></div>
+
+      <!-- narration: leo VO ducked over a synth bed, mastered to -16 LUFS (already leveled → volume 1) -->
+      <audio id="bgm" class="clip" src="narration-mix.mp3" data-start="0" data-duration="50.87" data-track-index="9" data-volume="1"></audio>
 
       <!-- Scene 1: title -->
       <div id="title" class="clip fill center bg" data-start="0" data-duration="3.0" data-track-index="1" style="z-index:5">
@@ -94,42 +97,42 @@
       </div>
 
       <!-- Beat 1 — terminal (Claude Code): ask for a payable agent -->
-      <div id="t1f" class="clip frame term-frame" data-start="3.0" data-duration="17.4" data-track-index="1">
+      <div id="t1f" class="clip frame term-frame" data-start="3.0" data-duration="16.47" data-track-index="1">
         <div class="bar">
           <span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span>
           <span class="dot" style="background:#28c840"></span><span class="label">claude — ~/nevermined-demo</span>
         </div>
       </div>
-      <video id="t1v" class="clip beat-video term-video" src="term1.mp4" muted playsinline data-start="3.0" data-duration="17.4" data-track-index="0"></video>
+      <video id="t1v" class="clip beat-video term-video" src="term1.mp4" muted playsinline data-start="3.0" data-duration="16.47" data-track-index="0"></video>
 
       <!-- Beat 2 — browser: the catalog confirms it exists -->
-      <div id="webf" class="clip frame web-frame" data-start="20.4" data-duration="11.83" data-track-index="1">
+      <div id="webf" class="clip frame web-frame" data-start="19.47" data-duration="11.93" data-track-index="1">
         <div class="bar">
           <span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span>
           <span class="dot" style="background:#28c840"></span><span class="url">nevermined.app/catalog</span>
         </div>
       </div>
-      <video id="webv" class="clip beat-video web-video" src="capture.mp4" muted playsinline data-start="20.4" data-duration="11.83" data-track-index="0"></video>
+      <video id="webv" class="clip beat-video web-video" src="capture.mp4" muted playsinline data-start="19.47" data-duration="11.93" data-track-index="0"></video>
 
       <!-- Beat 3 — terminal (Claude Code): pay over MCP -->
-      <div id="t2f" class="clip frame term-frame" data-start="32.23" data-duration="18.0" data-track-index="1">
+      <div id="t2f" class="clip frame term-frame" data-start="31.40" data-duration="16.47" data-track-index="1">
         <div class="bar">
           <span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span>
           <span class="dot" style="background:#28c840"></span><span class="label">claude — ~/nevermined-demo</span>
         </div>
       </div>
-      <video id="t2v" class="clip beat-video term-video" src="term2.mp4" muted playsinline data-start="32.23" data-duration="18.0" data-track-index="0"></video>
+      <video id="t2v" class="clip beat-video term-video" src="term2.mp4" muted playsinline data-start="31.40" data-duration="16.47" data-track-index="0"></video>
 
       <!-- brandmark across the footage span -->
-      <svg id="brandmark" class="clip wordmark" width="176" height="21" data-start="3.0" data-duration="47.23" data-track-index="2"><use href="#nvm-logo" /></svg>
+      <svg id="brandmark" class="clip wordmark" width="176" height="21" data-start="3.0" data-duration="44.87" data-track-index="2"><use href="#nvm-logo" /></svg>
 
       <!-- chapter lower-thirds, one per environment beat -->
-      <div id="ch1" class="clip chapter" data-start="3.4" data-duration="16.4" data-track-index="3"><span class="d"></span> Ask Claude Code</div>
-      <div id="ch2" class="clip chapter" data-start="20.8" data-duration="10.6" data-track-index="3"><span class="d"></span> Browse the catalog</div>
-      <div id="ch3" class="clip chapter" data-start="32.6" data-duration="16.6" data-track-index="3"><span class="d"></span> Pay over MCP</div>
+      <div id="ch1" class="clip chapter" data-start="3.4" data-duration="15.5" data-track-index="3"><span class="d"></span> Ask Claude Code</div>
+      <div id="ch2" class="clip chapter" data-start="19.9" data-duration="9.9" data-track-index="3"><span class="d"></span> Browse the catalog</div>
+      <div id="ch3" class="clip chapter" data-start="31.8" data-duration="15.0" data-track-index="3"><span class="d"></span> Pay over MCP</div>
 
       <!-- Scene 3: CTA -->
-      <div id="cta" class="clip fill center bg" data-start="50.23" data-duration="3.0" data-track-index="4" style="z-index:8">
+      <div id="cta" class="clip fill center bg" data-start="47.87" data-duration="3.0" data-track-index="4" style="z-index:8">
         <svg class="wordmark" width="300" height="35" style="margin-bottom:34px"><use href="#nvm-logo" /></svg>
         <div class="cta-title">Build agents that pay each other</div>
         <div class="cta-url">nevermined.app</div>
@@ -147,33 +150,33 @@
       // beat 1 (terminal) — fade up from teal, hold, fade down to teal (hard-kill at the clip boundary)
       tl.from("#t1f", { opacity: 0, scale: 0.96, duration: 0.5 }, 3.0);
       tl.from("#t1v", { opacity: 0, scale: 0.96, duration: 0.5 }, 3.0);
-      tl.to("#t1f",   { opacity: 0, duration: 0.4 }, 20.0);
-      tl.to("#t1v",   { opacity: 0, duration: 0.4 }, 20.0);
-      tl.set("#t1f",  { opacity: 0 }, 20.4);
-      tl.set("#t1v",  { opacity: 0 }, 20.4);
+      tl.to("#t1f",   { opacity: 0, duration: 0.4 }, 19.07);
+      tl.to("#t1v",   { opacity: 0, duration: 0.4 }, 19.07);
+      tl.set("#t1f",  { opacity: 0 }, 19.47);
+      tl.set("#t1v",  { opacity: 0 }, 19.47);
       // beat 2 (browser)
-      tl.from("#webf", { opacity: 0, scale: 0.96, duration: 0.5 }, 20.4);
-      tl.from("#webv", { opacity: 0, scale: 0.96, duration: 0.5 }, 20.4);
-      tl.to("#webf",   { opacity: 0, duration: 0.4 }, 31.83);
-      tl.to("#webv",   { opacity: 0, duration: 0.4 }, 31.83);
-      tl.set("#webf",  { opacity: 0 }, 32.23);
-      tl.set("#webv",  { opacity: 0 }, 32.23);
+      tl.from("#webf", { opacity: 0, scale: 0.96, duration: 0.5 }, 19.47);
+      tl.from("#webv", { opacity: 0, scale: 0.96, duration: 0.5 }, 19.47);
+      tl.to("#webf",   { opacity: 0, duration: 0.4 }, 31.0);
+      tl.to("#webv",   { opacity: 0, duration: 0.4 }, 31.0);
+      tl.set("#webf",  { opacity: 0 }, 31.40);
+      tl.set("#webv",  { opacity: 0 }, 31.40);
       // beat 3 (terminal)
-      tl.from("#t2f", { opacity: 0, scale: 0.96, duration: 0.5 }, 32.23);
-      tl.from("#t2v", { opacity: 0, scale: 0.96, duration: 0.5 }, 32.23);
-      tl.to("#t2f",   { opacity: 0, duration: 0.4 }, 49.83);
-      tl.to("#t2v",   { opacity: 0, duration: 0.4 }, 49.83);
-      tl.set("#t2f",  { opacity: 0 }, 50.23);
-      tl.set("#t2v",  { opacity: 0 }, 50.23);
+      tl.from("#t2f", { opacity: 0, scale: 0.96, duration: 0.5 }, 31.40);
+      tl.from("#t2v", { opacity: 0, scale: 0.96, duration: 0.5 }, 31.40);
+      tl.to("#t2f",   { opacity: 0, duration: 0.4 }, 47.47);
+      tl.to("#t2v",   { opacity: 0, duration: 0.4 }, 47.47);
+      tl.set("#t2f",  { opacity: 0 }, 47.87);
+      tl.set("#t2v",  { opacity: 0 }, 47.87);
       // brandmark + chapters
       tl.from("#brandmark", { opacity: 0, duration: 0.5 }, 3.3);
       tl.from("#ch1", { opacity: 0, x: -26, duration: 0.5 }, 3.5);
-      tl.from("#ch2", { opacity: 0, x: -26, duration: 0.5 }, 20.9);
-      tl.from("#ch3", { opacity: 0, x: -26, duration: 0.5 }, 32.7);
+      tl.from("#ch2", { opacity: 0, x: -26, duration: 0.5 }, 20.0);
+      tl.from("#ch3", { opacity: 0, x: -26, duration: 0.5 }, 31.9);
       // cta
-      tl.from("#cta .wordmark",  { opacity: 0, y: 22, duration: 0.5 }, 50.33);
-      tl.from("#cta .cta-title", { opacity: 0, y: 28, duration: 0.6 }, 50.48);
-      tl.from("#cta .cta-url",   { opacity: 0, y: 20, duration: 0.6 }, 50.73);
+      tl.from("#cta .wordmark",  { opacity: 0, y: 22, duration: 0.5 }, 47.97);
+      tl.from("#cta .cta-title", { opacity: 0, y: 28, duration: 0.6 }, 48.12);
+      tl.from("#cta .cta-url",   { opacity: 0, y: 20, duration: 0.6 }, 48.37);
       window.__timelines["main"] = tl;
     </script>
   </body>

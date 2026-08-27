@@ -6,8 +6,9 @@
 #   • Record in a clean throwaway dir: the host path shows in the prompt line AND in tool calls.
 #   • `unset CLAUDE_CODE_CHILD_SESSION` — else a nested run shows "transcript saving is off …".
 #   • Escape after the turn — dismisses onboarding popups ("Teach auto mode about your environment?").
-#   • The "N MCP servers need authentication" line comes from your GLOBAL config; start Claude with a
-#     clean config dir if you must hide it (thematically fine for an MCP demo).
+#   • The "N MCP servers need authentication" line comes from your GLOBAL config — the launch line below
+#     hides it by aliasing `claude` to `claude --strict-mcp-config` (ignores all other MCP config). The alias
+#     is defined in the hidden section, so the RECORDED command stays a clean `claude`, not the flag.
 #   • A LIVE model turn is NON-DETERMINISTIC (wording + surprise popups vary run to run). For a polished,
 #     repeatable cut, script a fixed answer (the HTML-terminal re-enactment seam in composition.html)
 #     or record a good take and trim. Live capture = most authentic; re-enactment = most controllable.
@@ -20,7 +21,7 @@ Set Padding 24
 # Set Theme "Builtin Dark"   # optional; the default (charm) already renders the Claude Code TUI cleanly
 
 Hide
-Type "cd {{DEMO_DIR}} && unset CLAUDE_CODE_CHILD_SESSION && clear"
+Type "cd {{DEMO_DIR}} && unset CLAUDE_CODE_CHILD_SESSION && alias claude='claude --strict-mcp-config' && clear"
 Enter
 Sleep 400ms
 Type "claude"
