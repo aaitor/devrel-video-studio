@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Synthesize one narration line to a silence-trimmed WAV via Orpheus on Melkor (OpenAI-compatible).
-# Standard Nevermined demo voice = leah. Usage: tts.sh "<text>" <out.wav> [voice]
+# Voice must MATCH the presenter: male leo/dan/zac, female leah/tara/jess/mia/zoe (default leah). Usage: tts.sh "<text>" <out.wav> [voice]
 # Env overrides: ORPHEUS_URL, ORPHEUS_KEY. Clean the text first (no parens/version numbers; em-dash -> comma).
 set -euo pipefail
 

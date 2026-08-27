@@ -45,9 +45,11 @@ Each has a commented seam in `templates/composition.html` and a field in `brief.
    `--local-only` (MusicGen). Under narration, lower the bed and duck with `/hyperframes-audio` (voiceover
    carve). Tune key/tempo/layers in `gen-bgm.py`. Note: convert footage with **dense keyframes**
    (`-g 30 -keyint_min 30 -sc_threshold 0`) or the renderer freezes footage frames between seeks.
-2. **Background narration (2a).** ✅ Supported. TTS each beat line with `scripts/tts.sh` (Orpheus on Melkor,
-   voice `leah`; restart `start_orpheus_stack.sh` if it 502s — post-reboot it can segfault at slot-init, see
-   the `orpheus-tts-melkor` memory). `templates/narrate.py` measures the lines, **derives the scene/chapter
+2. **Background narration (2a).** ✅ Supported. TTS each beat line with `scripts/tts.sh` in a **voice that
+   matches the presenter** (Orpheus on Melkor — male `leo`/`dan`/`zac`, female `leah`/`tara`/`jess`/`mia`/`zoe`;
+   restart `start_orpheus_stack.sh` if it 502s — post-reboot it can segfault at slot-init, see the
+   `orpheus-tts-melkor` memory). Changing the voice later is a FULL re-gen (re-TTS → narrate.py → re-time →
+   mix → re-lip-sync the avatar bubbles against the new voice). `templates/narrate.py` measures the lines, **derives the scene/chapter
    times from the audio** (never the reverse), writes `voice.wav`, and re-times `captions.<lang>.srt` to the
    voice. Retime the composition to those numbers (a 26s silent cut → ~31s), then `scripts/mix-audio.sh`
    ducks the music bed under the voice and masters to −16 LUFS. Clean text first (no parens/version numbers;
@@ -60,14 +62,20 @@ Each has a commented seam in `templates/composition.html` and a field in `brief.
    from `narration-mix.mp3` so lips match what's heard); the script lip-syncs, then **face-tracks** the head into
    a pinned square (`track_crop.py` follows the face every frame at constant size so it doesn't drift in the circle
    — vidstab alone can't calm a *moving subject*; the circle is CSS `border-radius:50%`, `data-track-index=11`). Depends on (2a):
-   narration first, avatar rendered against a segment of it. **Gotchas baked into avatar.sh** (learned in the
-   feasibility spike): the RX 9060 XT is HIP **device 1** (device 0 = Ryzen iGPU) → `HIP_VISIBLE_DEVICES=1` is
-   mandatory or every kernel dies `invalid device function`; 256 inference peaks ~14 GB → it frees idle Ollama
-   models first (Orpheus stays up); ~10 min/clip cold. Plate must be ≥ the audio length (no auto-loop). Env at
-   `melkor:~/Projects/AI/latentsync-spike/` (torch 2.9.1+rocm6.4, LatentSync 1.5 ckpt). **Consent:** use only a
-   face/voice you have rights to — real videos need your own plates; the catalog demo uses LatentSync's bundled
-   sample face as a stand-in. Sharper mouth (512 / LatentSync 1.6) needs Orpheus stopped for VRAM — not worth it
-   at bubble size. `narrated-devrel` + avatar.
+   narration first, avatar rendered against a segment of it (feed the clean per-line `voN.wav` for the tightest sync).
+   **Gotchas baked into avatar.sh** (spike + real use): (a) LatentSync is a **25fps model** (`stage2.yaml
+   video_fps:25`) → avatar.sh normalizes any plate to 25fps first, else the lips **drift** against the audio (a
+   30fps plate was a real sync bug); (b) the RX 9060 XT is HIP **device 1** (device 0 = Ryzen iGPU) →
+   `HIP_VISIBLE_DEVICES=1` is mandatory or every kernel dies `invalid device function`; (c) 256 inference peaks
+   ~14 GB → avatar.sh frees idle Ollama models, but a service (sophia) can reload one mid-run with a 24h keep-alive
+   → for a clean run `sudo systemctl stop ollama` (Orpheus is a standalone server on :8099, unaffected) and restart
+   after; (d) **SSH to Melkor is flaky** → avatar.sh ships its remote script as a *file* (scp, integrity-checked),
+   not piped over stdin. `STEPS=30` (env) for a crisper mouth; brighten a backlit plate (`ffmpeg eq`). ~10 min/clip
+   cold. Plate must be ≥ the line (no auto-loop). Env at `melkor:~/Projects/AI/latentsync-spike/` (torch
+   2.9.1+rocm6.4, LatentSync 1.5 ckpt). **Privacy + consent:** use only a face you have rights to; `<plate>` is
+   `avatar_plate:` from the brief — a **private recording kept OUTSIDE the (public) repo**
+   (`~/Videos/<Org>/DevRel/Talking_Head/<name>/`), and every derived `avatar-*.mp4`/render is gitignored. Sharper
+   mouth (512 / LatentSync 1.6) needs Orpheus stopped for VRAM — not worth it at bubble size. `narrated-devrel` + avatar.
 4. **Subtitles (3).** ✅ Supported. Author caption cues timed to the beats → `captions.<lang>.srt` (soft,
    toggleable, one file per language). Ship the `.srt` alongside the clean video; burn a social/autoplay
    cut with `scripts/subtitles.sh`. Once narration exists, generate cues from its transcript (WhisperX via

@@ -93,24 +93,27 @@
         <div class="cta-url">{{CTA_URL}}</div>
       </div>
 
-      <!-- ==================== ROADMAP SEAMS (not built yet — see references/production-notes.md) ====================
+      <!-- ==================== OPTIONAL LAYERS (all supported — see references/production-notes.md, SKILL §5.4–5.7) ====
         MUSIC:     <audio id="bgm" class="clip" src="bgm.mp3" data-start="0" data-duration="{{TOTAL}}" data-track-index="9" data-volume="0.85"></audio>
                    local bed: scripts/gen-bgm.py bed.wav → ffmpeg -i bed.wav bgm.mp3. Or /media-use resolve --type bgm.
                    Keep it a bed; if NARRATION exists, lower data-volume and duck via /hyperframes-audio.
-        NARRATION: scripts/tts.sh (Orpheus 'leah') per beat -> narrate.py derives scene/chapter times from the audio
+        NARRATION: scripts/tts.sh (Orpheus) per beat -> narrate.py derives scene/chapter times from the audio
                    -> mix-audio.sh ducks the bed under the voice (-16 LUFS) -> use that one mp3 in the MUSIC seam above.
-                   Lock SCENE/CHAPTER times to the audio, not the reverse (a 26s silent cut grows to ~31s).
-        AVATAR:    face-only circular bubble, lip-synced to a NARRATION segment. Generate with
+                   Pick a voice that MATCHES the presenter: male leo/dan/zac, female leah/tara/jess/mia/zoe.
+                   Lock SCENE/CHAPTER times to the audio, not the reverse (voice length sets TOTAL; a snappier voice = shorter cut).
+        AVATAR:    face-only circular bubble(s), lip-synced, shown ONLY at intro / one transition / CTA (product stays hero).
                      scripts/avatar.sh <plate> <line.wav> avatar-face.mp4   (LatentSync on Melkor, AMD ROCm)
-                   where <line.wav> is the exact segment the mouth should say — trim it from narration-mix.mp3
-                   so the lips match what's heard. Show it ONLY at intro / one transition / CTA (product stays hero).
-                   avatar.sh returns a SQUARE crop; the circle is CSS below. data-duration = the wav's length.
-                     <video id="avatar" class="clip" src="avatar-face.mp4" muted playsinline
+                   <plate> = brief avatar_plate: a PRIVATE recording OUTSIDE the repo (~/Videos/<Org>/DevRel/Talking_Head/<name>/);
+                   generated avatar-*.mp4 are gitignored. <line.wav> = the clean per-line voN.wav (best sync) or trim from the mix.
+                   avatar.sh normalizes the plate to 25fps (LatentSync's rate, else lips drift) + face-tracks (pins the head) +
+                   returns a SQUARE crop; the circle is CSS. Env STEPS=30 for a crisper mouth; brighten a backlit plate first.
+                   One <video> per moment, all sharing .face-bubble (data-duration = the line length):
+                     <video id="avatar" class="clip face-bubble" src="avatar-face.mp4" muted playsinline
                             data-start="{{AVATAR_START}}" data-duration="{{AVATAR_DUR}}" data-track-index="11"></video>
-                   CSS:  #avatar { position:absolute; right:110px; bottom:130px; width:280px; height:280px;
+                   CSS:  .face-bubble { position:absolute; right:120px; bottom:140px; width:280px; height:280px;
                             border-radius:50%; object-fit:cover; border:5px solid var(--lime);
-                            box-shadow:0 20px 60px rgba(0,0,0,.5); background:var(--teal-dark); z-index:7; }
-                   GSAP: tl.from("#avatar",{opacity:0,scale:0.6,y:24,duration:0.5},{{AVATAR_START}});
+                            box-shadow:0 20px 60px rgba(0,0,0,.5); background:var(--teal-dark); z-index:9; }  /* z-index > CTA card (8) */
+                   GSAP (per element, by id): tl.from("#avatar",{opacity:0,scale:0.6,y:24,duration:0.5},{{AVATAR_START}});
                          tl.to("#avatar",{opacity:0,scale:0.9,duration:0.28},{{AVATAR_END}}-0.28);
         SUBTITLES: ship captions.<lang>.srt alongside the video (soft, toggleable, one per language) — scripts/subtitles.sh
                    burns a hard social cut. From narration: transcript via /media-use (WhisperX). Or author cues to the beats.

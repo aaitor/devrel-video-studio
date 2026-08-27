@@ -32,10 +32,11 @@ outputs:
   # - profile: social-9x16    # roadmap: recompose for portrait, don't crop
   # - profile: web-loop       # roadmap: short muted loop
 
-# ── ROADMAP fields (not built yet — see references/production-notes.md) ──
+# ── Optional layers (all supported — see references/production-notes.md, SKILL §5.4–5.7) ──
 audio:
   music: null                 # bgm.mp3 → scripts/gen-bgm.py (local, no auth) or /media-use resolve --type bgm
-  narration: null             # e.g. leah -> scripts/tts.sh per beat; narrate.py drives timing; mix-audio.sh ducks the bed
+  narration: null             # voice MUST match the presenter: male leo/dan/zac, female leah/tara/jess/mia/zoe.
+                              # scripts/tts.sh per beat; narrate.py drives timing; mix-audio.sh ducks the bed. Changing it later = full re-gen.
   avatar: null                # e.g. [intro, cta] -> face-only circular bubble at key moments (LatentSync on Melkor, ROCm)
   avatar_plate: null          # BRING YOUR OWN talking-head recording, kept OUTSIDE this repo (your face is never committed).
                               # e.g. ~/Videos/<Org>/DevRel/Talking_Head/<name>/<file>.mp4  — see README "Talking-head avatar". avatar.sh reads it; bubbles are gitignored.

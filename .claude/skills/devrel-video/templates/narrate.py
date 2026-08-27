@@ -49,7 +49,7 @@ with wave.open('voice.wav', 'wb') as w:
     w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR)
     w.writeframes((st * 32767).astype('<i2').tobytes())
 
-# captions re-timed to the narration (what leah actually says)
+# captions re-timed to the narration (what the voice actually says)
 def ts(x):
     ms = int(round(x * 1000))
     return f"{ms//3600000:02d}:{ms%3600000//60000:02d}:{ms%60000//1000:02d},{ms%1000:03d}"
