@@ -33,6 +33,7 @@ outputs:
 
 audio:
   music: bgm.mp3   # local synth bed via scripts/gen-bgm.py
-  narration: leah   # Orpheus voiceover (scripts/tts.sh); composition re-timed to the voice (25.7s -> 31s)
-  avatar: null
+  narration: leo   # Orpheus MALE voice (matches the male presenter); composition re-timed to the voice (leo is snappier -> 27.2s). Male voices: leo/dan/zac; female: tara/leah/jess/mia/zoe.
+  avatar: [intro, cta]   # face-only circular bubbles (scripts/avatar.sh → LatentSync on Melkor), face-tracked + lip-synced to the intro & CTA lines
+  avatar_plate: ~/Videos/Nevermined/DevRel/Talking_Head/Aitor/shorter_but_better.mp4   # PRIVATE talking-head recording, kept OUTSIDE the (public) repo; avatar.sh reads it. Generated bubbles (avatar-*.mp4) are gitignored — never committed.
   subtitles: [en, es]   # captions.en.srt, captions.es.srt

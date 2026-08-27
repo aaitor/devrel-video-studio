@@ -1,23 +1,23 @@
 1
-00:00:00,400 --> 00:00:06,240
+00:00:00,400 --> 00:00:03,461
 The Nevermined catalog —
 pay-per-call AI services.
 
 2
-00:00:06,940 --> 00:00:14,397
+00:00:04,161 --> 00:00:11,252
 Browse 149+ curated services — call them
 from a prompt, an MCP server, or the router.
 
 3
-00:00:14,597 --> 00:00:18,706
+00:00:11,561 --> 00:00:15,975
 Filter by category to narrow the list —
 here, Crypto & Blockchain.
 
 4
-00:00:20,640 --> 00:00:26,620
+00:00:17,861 --> 00:00:23,090
 Open any service to see what it does, its price,
 and how to call it with a single API key.
 
 5
-00:00:27,120 --> 00:00:30,491
+00:00:24,341 --> 00:00:26,728
 Start building at nevermined.app/catalog.

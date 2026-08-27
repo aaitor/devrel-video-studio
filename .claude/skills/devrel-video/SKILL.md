@@ -11,7 +11,7 @@ A **thin orchestrator**. It does not reimplement capture or composition — it d
 - **HyperFrames** for composition + deterministic MP4 render,
 - **FFmpeg / ffprobe** for convert, master, and QA.
 
-Read `references/production-notes.md` first for environment gotchas (sandbox flags, `init` flags, CDN vendoring, determinism) and the roadmap for **music, narration, avatar, and subtitles** (not built yet — the template and manifest already carry commented seams for them).
+Read `references/production-notes.md` first for environment gotchas (sandbox flags, `init` flags, CDN vendoring, determinism) and the production steps for **music, narration, avatar, and subtitles** (all supported — steps 5.4–5.7; the template and manifest carry seams for each).
 
 ## When to use
 
@@ -58,6 +58,9 @@ composition (lower the volume under narration). For a produced track: `/media-us
 ### 5.6 · Subtitles (optional)
 Author caption cues timed to the beats → `projects/<slug>/captions.<lang>.srt` — soft, toggleable, platform-standard; **one file per language** covers "alternative subtitles". Ship the `.srt` next to the video (YouTube/LinkedIn read it). For autoplay-muted social, burn a hard cut: `scripts/subtitles.sh projects/<slug> captions.en.srt`. When narration exists, derive the cues from its transcript (WhisperX via `/media-use`) instead of authoring.
 
+### 5.7 · Avatar (optional — face-only presenter)
+A **face-only circular bubble**, lip-synced, shown ONLY at intro / one transition / CTA (product stays the hero — a full-time presenter reads as a webinar). Depends on narration. Trim the exact line the mouth should say from `narration-mix.mp3` so lips match what's heard: `ffmpeg -ss <t0> -to <t1> -i projects/<slug>/narration-mix.mp3 -ar 16000 -ac 1 line.wav`. Then `scripts/avatar.sh <plate> line.wav projects/<slug>/avatar-face.mp4` — runs **LatentSync (256) on Melkor's AMD GPU (ROCm)**, lip-syncs, then **pins the face** (per-frame face-tracking via `track_crop.py` — follows the face every frame at constant size, so the head stays put in the small circle instead of drifting; vidstab alone can't fix a *moving subject*). Add a `<video class="clip face-bubble" src="…" data-start data-duration data-track-index="11">` element with a shared `.face-bubble` CSS class (`border-radius:50%` = the circle) + a GSAP pop-in / fade-out over that window (`data-duration` = the line's length). **For a bubble at more than one moment** (e.g. intro *and* CTA), run avatar.sh once per line and add one element per window; set `.face-bubble` `z-index` above any full-screen scene card it overlaps (the CTA card is z-index 8 → bubble z-index 9). The `<plate>` is the `avatar_plate:` from `brief.yaml` — a **private recording kept OUTSIDE the (public) repo** (convention: `~/Videos/<Org>/DevRel/Talking_Head/<name>/`); generated `avatar-*.mp4` bubbles are gitignored, never committed. Format: front-on, sitting still, even light, mouth visible, ≥ the line's length; **any fps** (avatar.sh normalizes to 25 fps — LatentSync's rate, else the lips drift). Brighten a backlit plate first (`ffmpeg -vf eq=brightness=0.06:contrast=1.10:gamma=1.12`), and raise `STEPS=30` (env, default 20) for a crisper mouth. ~10 min/clip cold. `narrated-devrel` + avatar.
+
 ### 6 · Render + QA → `projects/<slug>/renders/`
 `scripts/render-qa.sh projects/<slug>` → high master + web-compressed copy + ffprobe + contact sheet. Gates before "done":
 - `hyperframes lint` 0 errors · `hyperframes check` passes (Contrast AA).
@@ -76,6 +79,6 @@ Author caption cues timed to the beats → `projects/<slug>/captions.<lang>.srt`
 | Audio (music/SFX/voice) + captions | `/media-use`, `/hyperframes-audio` |
 | Master / convert / QA | FFmpeg / ffprobe (`scripts/render-qa.sh`) |
 
-## Not built yet
+## Roadmap
 
-Talking-head avatar (narration, music, and subtitles are supported — steps 5.4–5.6). See `references/production-notes.md → Roadmap`.
+Music, narration, avatar, and subtitles are all supported (steps 5.4–5.7). Still open: portrait/social **output profiles** (9×16 recompose, not crop) and a short muted web-loop; and recording a real presenter's **avatar plates** (the demo uses a stand-in face). See `references/production-notes.md`.

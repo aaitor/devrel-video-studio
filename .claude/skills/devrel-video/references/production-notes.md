@@ -53,9 +53,21 @@ Each has a commented seam in `templates/composition.html` and a field in `brief.
    ducks the music bed under the voice and masters to −16 LUFS. Clean text first (no parens/version numbers;
    em-dash → comma). Piper (`en_US-lessac-medium`, bundles its own onnxruntime) is a working no-auth fallback.
    `narrated-devrel` mode.
-3. **Avatar (2b).** A talking-head presenter, lip-synced to the narration, composited in a corner
-   (`#avatar` `<video>` seam). Generate with a talking-head tool (HeyGen — HyperFrames' parent — or
-   `/talking-head-recut` for packaging). It depends on (2a): narration first, avatar rendered against it.
+3. **Avatar (2b).** ✅ Supported — **face-only circular bubble**, lip-synced, shown ONLY at intro / one
+   transition / CTA (product stays the hero — a full-time presenter turns it into a webinar). `scripts/avatar.sh
+   <plate> <line.wav> avatar-face.mp4` runs **LatentSync (256) on Melkor's AMD RX 9060 XT (ROCm)** — proven
+   local, no HeyGen/NVIDIA needed. Feed `<line.wav>` = the exact narration segment the mouth should say (trim it
+   from `narration-mix.mp3` so lips match what's heard); the script lip-syncs, then **face-tracks** the head into
+   a pinned square (`track_crop.py` follows the face every frame at constant size so it doesn't drift in the circle
+   — vidstab alone can't calm a *moving subject*; the circle is CSS `border-radius:50%`, `data-track-index=11`). Depends on (2a):
+   narration first, avatar rendered against a segment of it. **Gotchas baked into avatar.sh** (learned in the
+   feasibility spike): the RX 9060 XT is HIP **device 1** (device 0 = Ryzen iGPU) → `HIP_VISIBLE_DEVICES=1` is
+   mandatory or every kernel dies `invalid device function`; 256 inference peaks ~14 GB → it frees idle Ollama
+   models first (Orpheus stays up); ~10 min/clip cold. Plate must be ≥ the audio length (no auto-loop). Env at
+   `melkor:~/Projects/AI/latentsync-spike/` (torch 2.9.1+rocm6.4, LatentSync 1.5 ckpt). **Consent:** use only a
+   face/voice you have rights to — real videos need your own plates; the catalog demo uses LatentSync's bundled
+   sample face as a stand-in. Sharper mouth (512 / LatentSync 1.6) needs Orpheus stopped for VRAM — not worth it
+   at bubble size. `narrated-devrel` + avatar.
 4. **Subtitles (3).** ✅ Supported. Author caption cues timed to the beats → `captions.<lang>.srt` (soft,
    toggleable, one file per language). Ship the `.srt` alongside the clean video; burn a social/autoplay
    cut with `scripts/subtitles.sh`. Once narration exists, generate cues from its transcript (WhisperX via

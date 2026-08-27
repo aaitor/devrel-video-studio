@@ -31,22 +31,52 @@ Requirements: Node 22+, FFmpeg, Chromium (see the guide §5). Everything runs lo
 
 Paste any of these to Claude Code:
 
-- **Basic tour** — `use /devrel-video to make a walkthrough of https://nevermined.app/catalog, showing browse → filter by category → open a service`
+**Without a talking head** (silent or voiceover only):
+- **Silent tour** — `use /devrel-video to make a silent walkthrough of https://nevermined.app/catalog, showing browse → filter by category → open a service`
+- **Narrated** — `use /devrel-video for https://nevermined.app/catalog: narrated walkthrough (male voice) + background music + English & Spanish subtitles`
 - **Reuse a brand** — `use /devrel-video for https://nevermined.app/pricing using the nevermined brand; show the plan comparison then the checkout`
 - **New brand** — `use /devrel-video for https://acme.com/app — extract the acme brand first, then walk sign-up → dashboard`
 - **Local product** — `use /devrel-video on my local app at http://localhost:3000 (start: npm run dev): sign-up → create a project → invite a teammate`
-- **Pin a specific element** — `…open the AgentOracle service specifically` (sets an exact `a[href="…"]` in `capture.js`, no fallback)
-- **Re-render / tweak** — `re-render the nevermined-catalog project with a slower detail scroll and a "Read the docs" CTA`
+
+**With a talking head** (presenter bubble at intro/CTA — see [Talking-head avatar](#talking-head-avatar-bring-your-own) below):
+- **Narrated + your avatar** — `use /devrel-video for https://nevermined.app/catalog: narrated (voice leo) with my talking-head avatar at the intro and CTA. My plate is at ~/Videos/Nevermined/DevRel/Talking_Head/Aitor/shorter_but_better.mp4`
+- **Avatar at intro only** — `…add my talking-head only at the intro, then let the product run full-screen` (plate as above)
+- **Pick the voice** — `…use a male voice — show me leo / dan / zac samples first` (the voice should match the presenter's)
+
+**Tweaks** (either mode):
+- **Pin an element** — `…open the AgentOracle service specifically` (exact `a[href="…"]` in `capture.js`, no fallback)
+- **Re-render** — `re-render nevermined-catalog with a slower detail scroll and a "Read the docs" CTA`
 - **Different length** — `make it ~45s with four chapters`, or `cut a 15s teaser`
 
-The skill gathers anything it still needs (audience, the one message, approved claims) before recording.
+The skill gathers anything it still needs (audience, the one message, approved claims, and — for an avatar — your plate path) before recording.
 
 ## Worked example
 
-`projects/nevermined-catalog/` — a 25.7s silent tour of the Nevermined AI Services catalog
-(browse → filter → inspect a service). See its README for the exact commands used.
+`projects/nevermined-catalog/` — a ~27s narrated tour of the Nevermined AI Services catalog
+(browse → filter → inspect a service) with music, en/es subtitles, and a presenter avatar at the intro/CTA.
+See its README for the exact commands used.
 
-## Not built yet
+## Optional layers (all supported)
 
-Talking-head avatar (narration, music, and subtitles are supported) — roadmap in
+Music, narration (Orpheus TTS — male `leo`/`dan`/`zac` or female `leah`/`tara`/`jess`/`mia`/`zoe`; match it to
+your presenter), a **face-only presenter avatar** (LatentSync on Melkor's AMD GPU, lip-synced, shown briefly at
+intro/CTA), and multi-language subtitles — steps 5.4–5.7 of the skill. Still on the roadmap: portrait/social
+output profiles. Details in
 [`.claude/skills/devrel-video/references/production-notes.md`](.claude/skills/devrel-video/references/production-notes.md).
+
+## Talking-head avatar (bring your own)
+
+The presenter bubble is **your own face** — you supply the recording; this studio never bundles a face.
+
+**Privacy.** Your talking-head footage lives **outside this repo**, e.g. `~/Videos/<Org>/DevRel/Talking_Head/<name>/`,
+and is referenced from `brief.yaml` (`avatar_plate:`). Nothing derived from it is committed either — the generated
+bubbles (`projects/<slug>/avatar-*.mp4`) and rendered videos are gitignored. **This repo is public; keep faces out of it.**
+
+**Required format** (one clip is enough to start):
+- **Sit still**, look at the lens, and **talk naturally** for ~30–60s. The words don't matter — only your face and
+  mouth motion are used; the narration is re-synced on top.
+- Face front-on, filling a good part of the frame; **even lighting** (no hard shadow across the mouth); nothing over the mouth.
+- 1080p+ (720p is fine), **any fps** (the pipeline normalizes to 25 fps, LatentSync's rate). No green screen — the bubble is a circular crop.
+
+Drop the file in your Talking_Head folder, point `avatar_plate:` at it, and the skill lip-syncs it to the narration
+at the intro/CTA — regenerated from your local copy each render.

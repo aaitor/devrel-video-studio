@@ -36,5 +36,7 @@ outputs:
 audio:
   music: null                 # bgm.mp3 → scripts/gen-bgm.py (local, no auth) or /media-use resolve --type bgm
   narration: null             # e.g. leah -> scripts/tts.sh per beat; narrate.py drives timing; mix-audio.sh ducks the bed
-  avatar: null                # talking-head lip-synced to narration; /talking-head-recut
+  avatar: null                # e.g. [intro, cta] -> face-only circular bubble at key moments (LatentSync on Melkor, ROCm)
+  avatar_plate: null          # BRING YOUR OWN talking-head recording, kept OUTSIDE this repo (your face is never committed).
+                              # e.g. ~/Videos/<Org>/DevRel/Talking_Head/<name>/<file>.mp4  — see README "Talking-head avatar". avatar.sh reads it; bubbles are gitignored.
   subtitles: []               # e.g. [en, es] -> captions.<lang>.srt (author to the beats, or from narration later)

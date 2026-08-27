@@ -1,23 +1,23 @@
 1
-00:00:00,400 --> 00:00:06,240
+00:00:00,400 --> 00:00:03,461
 El catálogo de Nevermined:
 servicios de IA de pago por uso.
 
 2
-00:00:06,940 --> 00:00:14,397
+00:00:04,161 --> 00:00:11,252
 Explora más de 149 servicios verificados: llámalos
 desde un prompt, un servidor MCP o el router.
 
 3
-00:00:14,597 --> 00:00:18,706
+00:00:11,561 --> 00:00:15,975
 Filtra por categoría para acotar la lista:
 aquí, Cripto y Blockchain.
 
 4
-00:00:20,640 --> 00:00:26,620
+00:00:17,861 --> 00:00:23,090
 Abre cualquier servicio para ver qué hace, su precio
 y cómo llamarlo con una sola clave API.
 
 5
-00:00:27,120 --> 00:00:30,491
+00:00:24,341 --> 00:00:26,728
 Empieza a construir en nevermined.app/catalog.
