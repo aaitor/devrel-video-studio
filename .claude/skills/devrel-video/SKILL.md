@@ -24,6 +24,9 @@ Read `references/production-notes.md` first for environment gotchas (sandbox fla
 - **Flow**: the 2–4 beats to show (e.g. browse → filter → open a detail).
 - **Brand**: reuse `brands/<name>/`, or extract from the URL (step 3).
 - **Output**: format(s) + duration target. Default: **silent 16:9, ~25–40 s**.
+- **Audio / avatar (optional, all prompt-selectable)** — set any of these straight from the prompt, and write them into `brief.yaml`:
+  - **voice**: the narration voice — male `leo`/`dan`/`zac`, female `leah`/`tara`/`jess`/`mia`/`zoe` (**match the presenter**; offer samples if unsure). "…narrated with voice `dan`" → `narration: dan`. Regenerating with a different voice makes a new variant (see 5.4).
+  - **music** on/off, **subtitles** languages, **avatar** at intro/CTA (+ its private `avatar_plate` path).
 - **Approved claims**: numbers/names allowed on screen — pull from the captured page, never invent (guide §7/§8).
 
 ## Workflow
