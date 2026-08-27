@@ -147,9 +147,10 @@
             tl.to("#t1-frame",{opacity:0,duration:0.35}, S-0.35); tl.to("#t1",{opacity:0,duration:0.35}, S-0.35);
             tl.from("#frame",{opacity:0,scale:0.96,duration:0.45}, S); tl.from("#a-roll",{opacity:0,scale:0.96,duration:0.45}, S);
 
-        RE-ENACTMENT option (deterministic, no capture, no model): instead of a captured .term-video, type on a
-        styled HTML terminal — <div class="clip cc-terminal">…<span class="prompt">›</span> your prompt…</div> — and
-        reveal lines with GSAP on the timeline. Pixel-perfect, re-times to narration, zero PII; you author the text.
+        RE-ENACTMENT option (deterministic, no capture, no model): instead of a captured .term-video, drop in the
+        ready-made HTML terminal template `templates/cc-terminal.html` — a styled Claude Code window whose prompt is
+        typed out and answer revealed by GSAP (monospace + `width` in `ch` with `ease:"steps(N)"`). Copy its
+        .cc-terminal CSS + markup + GSAP as one beat. Pixel-perfect, re-times to narration, zero PII; you author the text.
         QUICK PREVIEW without composing: scripts/stitch-envs.sh out.mp4 082826 term1.mp4 capture.mp4 term2.mp4
       ============================================================================================================= -->
     </div>

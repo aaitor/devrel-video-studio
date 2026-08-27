@@ -101,7 +101,8 @@ Each has a commented seam in `templates/composition.html` and a field in `brief.
      thematically fine for an MCP demo, or start Claude with a clean config dir.)
    - **Live = non-deterministic.** Wording *and* surprise popups vary run to run. Two paths — **support both**:
      (a) **capture** a real session (VHS scripted, or `asciinema rec` + `agg` render for a free-form take) —
-     authentic; (b) **re-enact** with the HTML-terminal seam (a styled `.cc-terminal` typed on by GSAP) —
+     authentic; (b) **re-enact** with the ready-made template `templates/cc-terminal.html` (a styled `.cc-terminal`
+     whose prompt+answer are typed/revealed by GSAP — monospace `width` in `ch` + `ease:"steps(N)"`) —
      deterministic, re-times to narration, zero PII, you author the text.
    - **Smooth hand-off = fade through the brand teal.** Place beats as sequential timeline clips with
      terminal-/browser-frame chrome and fade each **down to the `.bg`** (the composition already fades scenes over

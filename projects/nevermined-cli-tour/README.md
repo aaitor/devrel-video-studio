@@ -25,9 +25,13 @@ $S/capture-terminal.sh projects/nevermined-cli-tour/pay.tape
 cd projects/nevermined-cli-tour
 $S/stitch-envs.sh tour.mp4 082826 term1.mp4 capture.mp4 term2.mp4
 
-# 4b) full cut — compose in HyperFrames with terminal-/browser-frame chrome + the GSAP teal hand-off
-#     (title, chapters, narration, QA). See SKILL.md §5.8 and the MULTI-ENVIRONMENT seam in composition.html.
+# 4b) full cut — the composed timeline is committed as index.html (title → terminal → browser →
+#     terminal → CTA, chapter lower-thirds, fade-through-teal hand-offs, lint 0 errors). Render it:
+$S/render-qa.sh projects/nevermined-cli-tour      # → renders/out.mp4 (+ web copy + contact sheet)
 ```
+
+`index.html` expects `term1.mp4`, `capture.mp4`, `term2.mp4` next to it (steps 1–3 above). To swap in a
+deterministic terminal beat instead of a capture, drop in `templates/cc-terminal.html` (see SKILL §5.8).
 
 ## Notes
 
