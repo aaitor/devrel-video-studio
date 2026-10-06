@@ -29,6 +29,7 @@ demo-scripts/
 # Local/personal walkthroughs + loose scratch stay out; add a "!" line to publish one.
 /projects/*
 !/projects/example-walkthrough/
+!/projects/example-cli-tour/
 
 # host-specific / local-only capture helpers (not part of the public skill)
 .claude/skills/devrel-video/scripts/*.mjs

@@ -6,13 +6,19 @@ master with **FFmpeg** — orchestrated by the `/devrel-video` skill.
 
 Full design + rationale: [`local-devrel-video-studio-guide.md`](local-devrel-video-studio-guide.md) (v1.2).
 
-## Demo
+## Demos
 
-![DevRel Video Studio — example walkthrough](projects/example-walkthrough/renders/demo.gif)
+**Claude Code ⇄ browser** — a prompt in Claude Code drives a live browser capture, then hands the result back,
+all in one cut with fade-through-brand transitions ([`example-cli-tour`](projects/example-cli-tour/)):
 
-A ~26s narrated demo produced end-to-end by this studio — the [`example-walkthrough`](projects/example-walkthrough/)
-project (a self-contained sample app, captured silently; narration + music + EN/ES subtitles added with one
-`variant.sh` command). <!-- YT --> Full video with sound on YouTube *(link coming soon)*.
+![Claude Code drives the browser](projects/example-cli-tour/renders/demo.gif)
+
+**Narrated product walkthrough** — a self-contained sample app, captured silently, with narration + a music bed +
+EN/ES subtitles added by one `variant.sh` command ([`example-walkthrough`](projects/example-walkthrough/)):
+
+![example walkthrough](projects/example-walkthrough/renders/demo.gif)
+
+<!-- YT --> Full videos with sound on YouTube *(links coming soon)*.
 
 ## Layout
 
