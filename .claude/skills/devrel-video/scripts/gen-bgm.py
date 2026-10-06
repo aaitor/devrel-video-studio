@@ -2,26 +2,39 @@
 # ponytail: local synth music bed — license-clean placeholder, no model/auth needed.
 # Swap for a produced track via /media-use `resolve --type bgm` (HeyGen catalog) or --local-only (MusicGen),
 # through the same <audio> seam. Upbeat-calm tech bed: I-V-vi-IV pad + arp + soft kick/hats.
-import numpy as np, wave, sys
+import numpy as np, wave, sys, os
 
 SR = 44100
-DUR = float(sys.argv[2]) if len(sys.argv) > 2 else 25.7   # gen-bgm.py <out.wav> [duration_s]
+DUR = float(sys.argv[2]) if len(sys.argv) > 2 else 25.7   # gen-bgm.py <out.wav> [duration_s] [style]
 N = int(SR * DUR)
 t = np.arange(N) / SR
-BPM = 100.0
-beat = 60.0 / BPM          # 0.6s
-bar = 4 * beat             # 2.4s
+
+# Music styles — pick via a 3rd arg or BGM_STYLE env. chord = (bass midi, [voicing], [arp]).
+# 'studio' (default): bright I-iii-IV-V in D at 112 BPM. 'classic': the original I-V-vi-IV in C at 100 BPM.
+STYLES = {
+    "studio": {"bpm": 112.0, "chords": [
+        (50, [66, 69, 74], [62, 66, 69, 74]),   # D
+        (54, [66, 69, 73], [61, 66, 69, 73]),   # F#m
+        (55, [67, 71, 74], [62, 67, 71, 74]),   # G
+        (57, [64, 69, 73], [64, 69, 73, 76]),   # A
+    ]},
+    "classic": {"bpm": 100.0, "chords": [
+        (48, [64, 67, 72], [60, 64, 67, 72]),   # C
+        (43, [62, 67, 71], [62, 67, 71, 74]),   # G
+        (45, [64, 69, 72], [57, 60, 64, 69]),   # Am
+        (41, [65, 69, 72], [65, 69, 72, 77]),   # F
+    ]},
+}
+STYLE = sys.argv[3] if len(sys.argv) > 3 else os.environ.get("BGM_STYLE", "studio")
+_S = STYLES.get(STYLE, STYLES["studio"])
+BPM = _S["bpm"]
+beat = 60.0 / BPM
+bar = 4 * beat
 rng = np.random.default_rng(7)  # deterministic
 
 def hz(m): return 440.0 * 2 ** ((m - 69) / 12)
 
-# I–V–vi–IV in C: chord = (bass midi, [voicing midis], [arp midis])
-CHORDS = [
-    (48, [64, 67, 72], [60, 64, 67, 72]),  # C
-    (43, [62, 67, 71], [62, 67, 71, 74]),  # G
-    (45, [64, 69, 72], [57, 60, 64, 69]),  # Am
-    (41, [65, 69, 72], [65, 69, 72, 77]),  # F
-]
+CHORDS = _S["chords"]
 
 pad = np.zeros(N); bass = np.zeros(N); arp = np.zeros(N); kick = np.zeros(N); hat = np.zeros(N)
 
@@ -108,4 +121,4 @@ pcm = (st * 32767).astype('<i2')
 with wave.open(sys.argv[1] if len(sys.argv) > 1 else 'bgm.wav', 'wb') as w:
     w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR)
     w.writeframes(pcm.tobytes())
-print(f"wrote {DUR}s stereo bed, peak {np.abs(st).max():.3f}")
+print(f"wrote {DUR}s stereo bed (style={STYLE}, {BPM:.0f} BPM), peak {np.abs(st).max():.3f}")

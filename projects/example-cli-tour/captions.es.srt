@@ -1,0 +1,23 @@
+1
+00:00:00,400 --> 00:00:03,679
+¿Haciendo un demo de producto?
+Deja que Claude Code lo haga.
+
+2
+00:00:04,000 --> 00:00:06,677
+Solo apúntalo a la URL
+de tu producto.
+
+3
+00:00:10,200 --> 00:00:15,218
+Abre la página y graba el flujo real:
+explora, filtra, abre.
+
+4
+00:00:19,200 --> 00:00:23,039
+Luego compone, masteriza
+y te entrega un vídeo terminado.
+
+5
+00:00:24,600 --> 00:00:25,746
+Crea el tuyo.

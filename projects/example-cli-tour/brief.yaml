@@ -1,6 +1,6 @@
 # devrel-video project manifest — MULTI-ENVIRONMENT demo (Claude Code terminal ⇄ browser).
 id: example-cli-tour
-mode: silent-demo             # silent + music bed (no narration on this cut)
+mode: narrated-devrel         # narration (leah) + studio music bed + EN/ES subtitles
 audience: developers evaluating the studio
 message: "Claude Code drives the browser and ships a polished demo video"
 cta:
@@ -44,8 +44,8 @@ outputs:
   - profile: docs-16x9
 
 audio:
-  music: bgm                  # local license-clean bed (gen-bgm.py), data-volume 0.8
-  narration: null
+  music: studio               # gen-bgm.py "studio" style (112 BPM), ducked under the voice
+  narration: leah             # fixed-beat narration — narrate.sh → narration-mix.mp3 (beats are not voice-driven)
   avatar: null
   avatar_plate: null
-  subtitles: []
+  subtitles: [en, es]         # captions.en.srt / captions.es.srt

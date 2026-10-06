@@ -42,8 +42,9 @@ flags the script tag on purpose). For a confidential render:
 Each has a commented seam in `templates/composition.html` and a field in `brief.yaml`.
 
 1. **Music.** ✅ Supported. Fastest path (no auth/model): `scripts/gen-bgm.py` → a local synth bed
-   (`gen-bgm.py bed.wav`, then ffmpeg → `bgm.mp3`), wired through the `<audio id="bgm" … data-track-index="9">`
-   seam. Produced track: `/media-use resolve --type bgm` (HeyGen catalog — needs `heygen` sign-in) or
+   (`gen-bgm.py bed.wav [dur] [style]`, then ffmpeg → `bgm.mp3`), wired through the `<audio id="bgm" … data-track-index="9">`
+   seam. Two styles (3rd arg or `BGM_STYLE` env): **studio** (default — 112 BPM, I-iii-IV-V in D) and **classic**
+   (100 BPM, I-V-vi-IV in C). Produced track: `/media-use resolve --type bgm` (HeyGen catalog — needs `heygen` sign-in) or
    `--local-only` (MusicGen). Under narration, lower the bed and duck with `/hyperframes-audio` (voiceover
    carve). Tune key/tempo/layers in `gen-bgm.py`. Note: convert footage with **dense keyframes**
    (`-g 30 -keyint_min 30 -sc_threshold 0`) or the renderer freezes footage frames between seeks.
