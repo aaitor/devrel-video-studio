@@ -53,7 +53,7 @@ MuseTalk changes the mouth region to match new audio while retaining most of the
 Record approximately eight to twelve short presenter clips:
 
 ```text
-avatars/aitor/
+avatars/presenter/
 ├── neutral-front.mp4
 ├── explain-left.mp4
 ├── explain-right.mp4
@@ -104,7 +104,7 @@ video:
   fps: 25
 
 avatar:
-  identity: aitor
+  identity: presenter
   engine: musetalk-v1.5
   voice_engine: chatterbox-multilingual
   background: chroma-key
@@ -246,8 +246,8 @@ MuseTalk prepares an avatar once and reuses it with different audio clips. The a
 Illustrative configuration:
 
 ```yaml
-avatar_id: aitor-explain-left
-video_path: assets/avatars/aitor/explain-left.mp4
+avatar_id: presenter-explain-left
+video_path: assets/avatars/presenter/explain-left.mp4
 audio_path: build/audio/scene-02-avatar.wav
 result_dir: build/avatar/scene-02
 version: v15
@@ -440,7 +440,7 @@ devrel-video-studio/
 │       └── devrel-video/
 ├── assets/
 │   └── avatars/
-│       └── aitor/
+│       └── presenter/
 │           ├── plates/
 │           ├── voice-reference.wav
 │           └── avatar.yaml
@@ -546,7 +546,7 @@ For automated QA, generate:
 Example metadata:
 
 ```yaml
-identity: aitor
+identity: presenter
 type: real-consented-presenter
 consent:
   recorded: true
@@ -604,7 +604,7 @@ The initial avatar subsystem is complete when:
 /devrel-video create \
   --project agent-payment-demo \
   --mode devrel \
-  --avatar aitor \
+  --avatar presenter \
   --avatar-scenes intro,transition,cta \
   --voice chatterbox \
   --avatar-engine musetalk-v1.5 \

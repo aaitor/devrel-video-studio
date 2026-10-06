@@ -23,12 +23,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500;700&display=block" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <style>
-      :root { --teal:#0d3f48; --teal-dark:#082826; --lime:#d7f771; --salmon:#d97757; }
+      :root { --brand:#4f46e5; --brand-deep:#0b1020; --highlight:#22d3ee; --salmon:#d97757; }
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--teal-dark); }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--brand-deep); }
       body { font-family: "Inter", system-ui, sans-serif; color: #fff; -webkit-font-smoothing: antialiased; }
       .fill { position: absolute; inset: 0; }
-      .bg { background: radial-gradient(1200px 720px at 50% 30%, #0d3f48 0%, #082826 72%); }
+      .bg { background: radial-gradient(1200px 720px at 50% 30%, #4f46e5 0%, #0b1020 72%); }
 
       /* ── .cc-terminal: the re-enacted Claude Code window ─────────────────────────────────────────────
          Geometry matches the browser/terminal frame in composition.html (left 240, top 115, 1440×850). */
@@ -45,13 +45,13 @@
       .cc-welcome b { color: #fff; font-weight: 700; }
       .cc-welcome .sp { color: var(--salmon); }
       .cc-cmd { display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px; }
-      .cc-cmd .mk { color: var(--lime); font-weight: 700; }
+      .cc-cmd .mk { color: var(--highlight); font-weight: 700; }
       /* typewriter: monospace width in ch + steps() ease reveals one char per frame-step */
       .type { display: inline-block; overflow: hidden; white-space: nowrap; vertical-align: bottom; }
-      .cc-cur { display: inline-block; width: 13px; height: 30px; background: var(--lime); transform: translateY(4px); }
+      .cc-cur { display: inline-block; width: 13px; height: 30px; background: var(--highlight); transform: translateY(4px); }
       .cc-ans { margin-top: 26px; }
       .cc-ans .row { display: flex; gap: 16px; margin-bottom: 6px; }
-      .cc-ans .b { color: var(--lime); }               /* bullet */
+      .cc-ans .b { color: var(--highlight); }               /* bullet */
       .cc-ans .muted { color: #8b949e; }
       .cc-ans .hl { color: #fff; }
       .cc-done { color: var(--salmon); margin-top: 22px; font-size: 22px; }
@@ -65,10 +65,10 @@
       <div id="cc" class="clip cc-terminal" data-start="0" data-duration="8.0" data-track-index="1">
         <div class="cc-bar">
           <span class="cc-dot" style="background:#ff5f57"></span><span class="cc-dot" style="background:#febc2e"></span>
-          <span class="cc-dot" style="background:#28c840"></span><span class="cc-label">claude — ~/nevermined-demo</span>
+          <span class="cc-dot" style="background:#28c840"></span><span class="cc-label">claude — ~/acme-demo</span>
         </div>
         <div class="cc-body">
-          <div class="cc-welcome"><span class="sp">✻</span> <b>Claude Code</b> · Opus · ~/nevermined-demo</div>
+          <div class="cc-welcome"><span class="sp">✻</span> <b>Claude Code</b> · Opus · ~/acme-demo</div>
           <div class="cc-cmd">
             <span class="mk">&rsaquo;</span>
             <!-- width:50ch = the char count of the line below; keep them in sync with steps(50) in GSAP -->
@@ -76,7 +76,7 @@
             <span id="cur" class="cc-cur"></span>
           </div>
           <div id="ans" class="cc-ans">
-            <div class="row" id="a1"><span class="b">&#9679;</span><span><span class="hl">Weather Oracle</span> — a pay-per-call forecast agent on Nevermined.</span></div>
+            <div class="row" id="a1"><span class="b">&#9679;</span><span><span class="hl">Weather Oracle</span> — a pay-per-call forecast agent you can call over MCP.</span></div>
             <div class="row" id="a2"><span class="b">&nbsp;</span><span class="muted">One API key · settled over MCP · no checkout.</span></div>
             <div class="row" id="a3"><span class="b">&#9679;</span><span>Ready to call it — say the word and I'll pay per request.</span></div>
           </div>

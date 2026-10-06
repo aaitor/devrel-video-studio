@@ -23,5 +23,18 @@ hyperframes.lock.json
 # internal / not-public working material (kept local, never committed to this public repo)
 demo-scripts/
 
+# project workspaces — allowlist: only curated PUBLIC examples are committed.
+# Local/personal walkthroughs + loose scratch stay out; add a "!" line to publish one.
+/projects/*
+!/projects/example-walkthrough/
+
+# host-specific / local-only capture helpers (not part of the public skill)
+.claude/skills/devrel-video/scripts/*.mjs
+/record-longer.mjs
+/save-auth.mjs
+
+# python
+__pycache__/
+
 # os
 .DS_Store

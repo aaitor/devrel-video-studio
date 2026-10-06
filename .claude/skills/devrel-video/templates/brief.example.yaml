@@ -7,7 +7,7 @@ cta:
   title: "Start building"
   url: "example.com/docs"
 duration_target_seconds: 30
-brand: nevermined             # brands/<name>/  (tokens.json + logo.svg)
+brand: acme                   # brands/<name>/  (tokens.json + logo.svg)
 
 capture:
   url: "https://example.com/app"
@@ -23,12 +23,12 @@ environments: []              # e.g.:
   #   tape: intro.tape        #   copy templates/terminal-script.tape; set {{DEMO_DIR}} + {{PROMPT}}
   #   prompt: "Find me an AI weather agent I can call and pay for"
   # - kind: browser           #   the capture: block above (scripts/capture.sh)
-  #   url: "https://nevermined.app/catalog"
+  #   url: "https://example.com/app"
   # - kind: terminal
   #   tape: pay.tape
   #   prompt: "Now pay that agent 0.05 USDC over MCP and show me the receipt"
 terminal:
-  demo_dir: null              # e.g. ~/nevermined-demo — a CLEAN throwaway dir to record in (host paths
+  demo_dir: null              # e.g. ~/acme-demo — a CLEAN throwaway dir to record in (host paths
                               # show in the prompt + tool calls). Sanitation lives in the .tape (see template).
 
 # Each beat becomes a chapter lower-third. chapter data-start = 3.0 (title) + at_seconds.
@@ -53,7 +53,7 @@ audio:
   music: null                 # bgm.mp3 → scripts/gen-bgm.py (local, no auth) or /media-use resolve --type bgm
   narration: null             # voice MUST match the presenter: male leo/dan/zac, female leah/tara/jess/mia/zoe.
                               # scripts/tts.sh per beat; narrate.py drives timing; mix-audio.sh ducks the bed. Changing it later = full re-gen.
-  avatar: null                # e.g. [intro, cta] -> face-only circular bubble at key moments (LatentSync on Melkor, ROCm)
+  avatar: null                # e.g. [intro, cta] -> face-only circular bubble at key moments (LatentSync on your GPU host — see scripts/_env.sh)
   avatar_plate: null          # BRING YOUR OWN talking-head recording, kept OUTSIDE this repo (your face is never committed).
                               # e.g. ~/Videos/<Org>/DevRel/Talking_Head/<name>/<file>.mp4  — see README "Talking-head avatar". avatar.sh reads it; bubbles are gitignored.
   subtitles: []               # e.g. [en, es] -> captions.<lang>.srt (author to the beats, or from narration later)

@@ -48,9 +48,10 @@ Each has a commented seam in `templates/composition.html` and a field in `brief.
    carve). Tune key/tempo/layers in `gen-bgm.py`. Note: convert footage with **dense keyframes**
    (`-g 30 -keyint_min 30 -sc_threshold 0`) or the renderer freezes footage frames between seeks.
 2. **Background narration (2a).** ✅ Supported. TTS each beat line with `scripts/tts.sh` in a **voice that
-   matches the presenter** (Orpheus on Melkor — male `leo`/`dan`/`zac`, female `leah`/`tara`/`jess`/`mia`/`zoe`;
-   restart `start_orpheus_stack.sh` if it 502s — post-reboot it can segfault at slot-init, see the
-   `orpheus-tts-melkor` memory). Changing the voice later is one command — `scripts/variant.sh <project> <voice>`
+   matches the presenter** (any OpenAI-compatible TTS endpoint; the reference is Orpheus — male `leo`/`dan`/`zac`,
+   female `leah`/`tara`/`jess`/`mia`/`zoe`). Set `ORPHEUS_URL`/`ORPHEUS_KEY` (+ optional `ORPHEUS_MODEL`) once —
+   see `scripts/_env.sh`; if it errors, check the endpoint is reachable and the model/voice exist. Changing the
+   voice later is one command — `scripts/variant.sh <project> <voice>`
    (re-TTS → narrate.py → `retime.py` auto-applies the new `timing.json` to index.html → mix → re-lip-sync the
    avatar bubbles → `renders/out-<voice>.mp4`; `--no-avatar` skips the GPU step). `retime.py` is idempotent and
    keys off element ids/GSAP selectors, so it's safe to re-run for any voice. `templates/narrate.py` measures the lines, **derives the scene/chapter
@@ -61,22 +62,23 @@ Each has a commented seam in `templates/composition.html` and a field in `brief.
    `narrated-devrel` mode.
 3. **Avatar (2b).** ✅ Supported — **face-only circular bubble**, lip-synced, shown ONLY at intro / one
    transition / CTA (product stays the hero — a full-time presenter turns it into a webinar). `scripts/avatar.sh
-   <plate> <line.wav> avatar-face.mp4` runs **LatentSync (256) on Melkor's AMD RX 9060 XT (ROCm)** — proven
-   local, no HeyGen/NVIDIA needed. Feed `<line.wav>` = the exact narration segment the mouth should say (trim it
+   <plate> <line.wav> avatar-face.mp4` runs **LatentSync (256) on a GPU host over SSH** (reference: an AMD RX 9060
+   XT / ROCm box — proven local, no HeyGen/NVIDIA needed; set `AVATAR_HOST`/`LS_DIR`, see `scripts/_env.sh`). Feed
+   `<line.wav>` = the exact narration segment the mouth should say (trim it
    from `narration-mix.mp3` so lips match what's heard); the script lip-syncs, then **face-tracks** the head into
    a pinned square (`track_crop.py` follows the face every frame at constant size so it doesn't drift in the circle
    — vidstab alone can't calm a *moving subject*; the circle is CSS `border-radius:50%`, `data-track-index=11`). Depends on (2a):
    narration first, avatar rendered against a segment of it (feed the clean per-line `voN.wav` for the tightest sync).
    **Gotchas baked into avatar.sh** (spike + real use): (a) LatentSync is a **25fps model** (`stage2.yaml
    video_fps:25`) → avatar.sh normalizes any plate to 25fps first, else the lips **drift** against the audio (a
-   30fps plate was a real sync bug); (b) the RX 9060 XT is HIP **device 1** (device 0 = Ryzen iGPU) →
-   `HIP_VISIBLE_DEVICES=1` is mandatory or every kernel dies `invalid device function`; (c) 256 inference peaks
-   ~14 GB → avatar.sh frees idle Ollama models, but a service (sophia) can reload one mid-run with a 24h keep-alive
-   → for a clean run `sudo systemctl stop ollama` (Orpheus is a standalone server on :8099, unaffected) and restart
-   after; (d) **SSH to Melkor is flaky** → avatar.sh ships its remote script as a *file* (scp, integrity-checked),
+   30fps plate was a real sync bug); (b) on the reference AMD box the discrete GPU was HIP **device 1** (device 0 =
+   iGPU) → `HIP_VISIBLE_DEVICES=1` (NVIDIA hosts use `CUDA_VISIBLE_DEVICES` instead); (c) 256 inference peaks
+   ~14 GB → avatar.sh frees idle model-server VRAM, but another model server can reload mid-run → for a clean run
+   stop it (e.g. `sudo systemctl stop ollama`; the TTS server is separate, unaffected) and restart
+   after; (d) **SSH to the GPU host can be flaky** → avatar.sh ships its remote script as a *file* (scp, integrity-checked),
    not piped over stdin. `STEPS=30` (env) for a crisper mouth; brighten a backlit plate (`ffmpeg eq`). ~10 min/clip
-   cold. Plate must be ≥ the line (no auto-loop). Env at `melkor:~/Projects/AI/latentsync-spike/` (torch
-   2.9.1+rocm6.4, LatentSync 1.5 ckpt). **Privacy + consent:** use only a face you have rights to; `<plate>` is
+   cold. Plate must be ≥ the line (no auto-loop). Reference env: LatentSync 1.5 ckpt + a torch build for your GPU
+   (the AMD box used 2.9.1+rocm6.4); set `AVATAR_HOST`/`LS_DIR` (see `scripts/_env.sh`). **Privacy + consent:** use only a face you have rights to; `<plate>` is
    `avatar_plate:` from the brief — a **private recording kept OUTSIDE the (public) repo**
    (`~/Videos/<Org>/DevRel/Talking_Head/<name>/`), and every derived `avatar-*.mp4`/render is gitignored. Sharper
    mouth (512 / LatentSync 1.6) needs Orpheus stopped for VRAM — not worth it at bubble size. `narrated-devrel` + avatar.
@@ -109,8 +111,8 @@ Each has a commented seam in `templates/composition.html` and a field in `brief.
      terminal-/browser-frame chrome and fade each **down to the `.bg`** (the composition already fades scenes over
      it). A pure crossfade is **muddy** (terminal text ghosts through the page); fade-through-**black** is clean but
      off-brand; fade-through-**teal** is clean *and* on-brand, and the GSAP version adds the scale-pop. Quick
-     non-composition preview: `scripts/stitch-envs.sh out.mp4 082826 term1.mp4 capture.mp4 term2.mp4`. Worked
-     example: `projects/nevermined-cli-tour/`. Match VHS `Set Width/Height` to the browser viewport (1600×900) so
+     non-composition preview: `scripts/stitch-envs.sh out.mp4 0b1020 term1.mp4 capture.mp4 term2.mp4`. Worked
+     example of the re-enactment beat: `templates/cc-terminal.html`. Match VHS `Set Width/Height` to the browser viewport (1600×900) so
      beats stitch without letterboxing.
    - **Tooling (one-time, `scripts/capture-terminal.sh` self-installs vhs+ttyd):** `go install github.com/charmbracelet/vhs@latest`;
      ttyd static binary from `tsl0922/ttyd` releases; ffmpeg (present). Free-form path: `asciinema` (pip) + `agg`

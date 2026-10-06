@@ -17,25 +17,25 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <style>
       :root {
-        /* from brands/<name>/tokens.json — Nevermined defaults shown */
-        --teal: {{TEAL}};        /* #0d3f48 */
-        --teal-dark: {{TEAL_DARK}}; /* #082826 */
-        --mint: {{MINT}};        /* #12968c */
-        --lime: {{LIME}};        /* #d7f771 */
-        --muted: {{MUTED}};      /* #9fb7b0 */
+        /* from brands/<name>/tokens.json — Acme (default) shown. Names are semantic, so any brand maps on. */
+        --brand: {{BRAND}};           /* #4f46e5 */
+        --brand-deep: {{BRAND_DEEP}}; /* #0b1020 */
+        --accent: {{ACCENT}};         /* #6366f1 */
+        --highlight: {{HIGHLIGHT}};   /* #22d3ee */
+        --muted: {{MUTED}};           /* #94a3b8 */
         --line: #e3e7f0;
       }
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--teal-dark); }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--brand-deep); }
       body { font-family: "{{FONT}}", system-ui, sans-serif; color: #fff; -webkit-font-smoothing: antialiased; }
       .fill { position: absolute; inset: 0; }
       .center { display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
-      .bg { background: radial-gradient(1200px 720px at 50% 30%, var(--teal) 0%, var(--teal-dark) 72%); }
+      .bg { background: radial-gradient(1200px 720px at 50% 30%, var(--brand) 0%, var(--brand-deep) 72%); }
       .wordmark { color: #fff; display: block; }
 
-      .kicker { font-size: 24px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--lime); margin: 30px 0 22px; }
+      .kicker { font-size: 24px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--highlight); margin: 30px 0 22px; }
       .t-title { font-size: 96px; font-weight: 800; line-height: 1.03; letter-spacing: -.02em; max-width: 1350px; }
-      .t-title .hl { color: var(--lime); }
+      .t-title .hl { color: var(--highlight); }
       .t-sub { font-size: 38px; font-weight: 400; color: var(--muted); margin-top: 30px; }
 
       #frame { position: absolute; left: 240px; top: 115px; width: 1440px; height: 850px; background: #fff; border-radius: 16px; box-shadow: 0 40px 120px rgba(0,0,0,.5); z-index: 2; }
@@ -44,12 +44,12 @@
       .url { margin-left: 14px; font-size: 15px; color: #5b647c; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 4px 14px; font-weight: 500; }
       #a-roll { position: absolute; left: 240px; top: 155px; width: 1440px; height: 810px; object-fit: cover; background: #fff; border-radius: 0 0 16px 16px; z-index: 3; }
 
-      .chapter { position: absolute; left: 240px; top: 995px; height: 50px; display: flex; align-items: center; gap: 14px; padding: 0 26px; background: rgba(8,40,38,.9); border: 1px solid rgba(18,150,140,.55); border-radius: 999px; font-size: 27px; font-weight: 600; z-index: 6; }
-      .chapter .d { width: 11px; height: 11px; border-radius: 50%; background: var(--lime); }
+      .chapter { position: absolute; left: 240px; top: 995px; height: 50px; display: flex; align-items: center; gap: 14px; padding: 0 26px; background: rgba(11,16,32,.9); /* --brand-deep */ border: 1px solid rgba(99,102,241,.5); /* --accent */ border-radius: 999px; font-size: 27px; font-weight: 600; z-index: 6; }
+      .chapter .d { width: 11px; height: 11px; border-radius: 50%; background: var(--highlight); }
       #brandmark { position: absolute; right: 244px; top: 1008px; z-index: 6; opacity: .9; }
 
       .cta-title { font-size: 88px; font-weight: 800; letter-spacing: -.02em; }
-      .cta-url { margin-top: 26px; font-size: 40px; font-weight: 600; color: var(--lime); }
+      .cta-url { margin-top: 26px; font-size: 40px; font-weight: 600; color: var(--highlight); }
     </style>
   </head>
   <body>
@@ -102,7 +102,7 @@
                    Pick a voice that MATCHES the presenter: male leo/dan/zac, female leah/tara/jess/mia/zoe.
                    Lock SCENE/CHAPTER times to the audio, not the reverse (voice length sets TOTAL; a snappier voice = shorter cut).
         AVATAR:    face-only circular bubble(s), lip-synced, shown ONLY at intro / one transition / CTA (product stays hero).
-                     scripts/avatar.sh <plate> <line.wav> avatar-face.mp4   (LatentSync on Melkor, AMD ROCm)
+                     scripts/avatar.sh <plate> <line.wav> avatar-face.mp4   (LatentSync on a GPU host over SSH — see scripts/_env.sh)
                    <plate> = brief avatar_plate: a PRIVATE recording OUTSIDE the repo (~/Videos/<Org>/DevRel/Talking_Head/<name>/);
                    generated avatar-*.mp4 are gitignored. <line.wav> = the clean per-line voN.wav (best sync) or trim from the mix.
                    avatar.sh normalizes the plate to 25fps (LatentSync's rate, else lips drift) + face-tracks (pins the head) +
@@ -111,8 +111,8 @@
                      <video id="avatar" class="clip face-bubble" src="avatar-face.mp4" muted playsinline
                             data-start="{{AVATAR_START}}" data-duration="{{AVATAR_DUR}}" data-track-index="11"></video>
                    CSS:  .face-bubble { position:absolute; right:120px; bottom:140px; width:280px; height:280px;
-                            border-radius:50%; object-fit:cover; border:5px solid var(--lime);
-                            box-shadow:0 20px 60px rgba(0,0,0,.5); background:var(--teal-dark); z-index:9; }  /* z-index > CTA card (8) */
+                            border-radius:50%; object-fit:cover; border:5px solid var(--highlight);
+                            box-shadow:0 20px 60px rgba(0,0,0,.5); background:var(--brand-deep); z-index:9; }  /* z-index > CTA card (8) */
                    GSAP (per element, by id): tl.from("#avatar",{opacity:0,scale:0.6,y:24,duration:0.5},{{AVATAR_START}});
                          tl.to("#avatar",{opacity:0,scale:0.9,duration:0.28},{{AVATAR_END}}-0.28);
         SUBTITLES: ship captions.<lang>.srt alongside the video (soft, toggleable, one per language) — scripts/subtitles.sh
@@ -123,7 +123,7 @@
         A demo can move between the browser and the CLI (Claude Code): prompt in the terminal → switch to the
         product in the browser → back to the terminal. Capture each terminal beat with scripts/capture-terminal.sh
         (VHS renders the real Claude Code TUI headlessly → term<N>.mp4). Then place beats as SEQUENTIAL timeline
-        clips and hand off by fading each beat DOWN to opacity 0 — the teal .bg shows through, which IS a fade
+        clips and hand off by fading each beat DOWN to opacity 0 — the brand .bg shows through, which IS a fade
         through the brand colour (a pure crossfade ghosts terminal text through the page; fading over .bg doesn't).
 
         (A) Terminal-frame chrome — the browser #frame, re-skinned dark. Add to <style>:
@@ -142,7 +142,7 @@
             <!-- browser beat: the existing #frame + #a-roll, starting at 3.0 + 12.0 − 0.7 = 14.3 -->
             <!-- terminal beat 2: another .terminal-frame + .term-video, overlapping the browser's end likewise -->
 
-        (C) Hand-off (per seam at time S; 0.35s down through teal + 0.45s up with a scale-pop — the eased fade the
+        (C) Hand-off (per seam at time S; 0.35s down through the brand bg + 0.45s up with a scale-pop — the eased fade the
             browser cut uses). Give every clip a stable id:
             tl.to("#t1-frame",{opacity:0,duration:0.35}, S-0.35); tl.to("#t1",{opacity:0,duration:0.35}, S-0.35);
             tl.from("#frame",{opacity:0,scale:0.96,duration:0.45}, S); tl.from("#a-roll",{opacity:0,scale:0.96,duration:0.45}, S);
@@ -151,7 +151,7 @@
         ready-made HTML terminal template `templates/cc-terminal.html` — a styled Claude Code window whose prompt is
         typed out and answer revealed by GSAP (monospace + `width` in `ch` with `ease:"steps(N)"`). Copy its
         .cc-terminal CSS + markup + GSAP as one beat. Pixel-perfect, re-times to narration, zero PII; you author the text.
-        QUICK PREVIEW without composing: scripts/stitch-envs.sh out.mp4 082826 term1.mp4 capture.mp4 term2.mp4
+        QUICK PREVIEW without composing: scripts/stitch-envs.sh out.mp4 0b1020 term1.mp4 capture.mp4 term2.mp4
       ============================================================================================================= -->
     </div>
 

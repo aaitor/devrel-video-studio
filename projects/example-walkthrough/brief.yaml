@@ -1,0 +1,43 @@
+# devrel-video project manifest — a worked example. Silent, browser-only tour of a public demo app.
+id: example-walkthrough
+mode: silent-demo
+audience: developers evaluating a product
+message: "You can browse, filter, and open content in seconds"
+cta:
+  title: "Make your own"
+  url: "github.com/aaitor/devrel-video-studio"
+duration_target_seconds: 24
+brand: acme                   # brands/acme/ — the default placeholder brand (swap for a real one)
+
+capture:
+  url: "https://demo.realworld.io/"   # public RealWorld demo app (no login, no PII) — stands in for "your product"
+  start_command: null
+  viewport: "1600x900"
+  url_label: "demo.realworld.io"      # honest: the frame shows the real captured URL
+
+environments: []              # pure-browser (the default). Multi-env (terminal ⇄ browser) is optional — SKILL §5.8.
+terminal:
+  demo_dir: null
+
+# chapter data-start = 3.0 (title) + at_seconds. Re-sync at_seconds to your capture.js pacing after recording.
+beats:
+  - label: "The global feed"
+    at_seconds: 0.3
+  - label: "Filter by tag"
+    at_seconds: 7.5
+  - label: "Open an article"
+    at_seconds: 13.8
+
+approved_claims:              # only on-page / verifiable text may appear on screen — never invented
+  - "Captured live from the public RealWorld demo app."
+
+outputs:
+  - profile: docs-16x9        # 1920x1080, silent
+
+# Optional layers are off for this example (narration/avatar need a TTS endpoint / GPU host — see scripts/_env.sh).
+audio:
+  music: null
+  narration: null
+  avatar: null
+  avatar_plate: null
+  subtitles: []

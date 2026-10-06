@@ -10,17 +10,17 @@ import numpy as np
 
 SR = 48000
 FOOT_DUR = 20.28          # measured capture length
-FILTER_CAP, INSPECT_CAP = 7.7, 14.0   # capture-time of the filter click / service open (from catalog.js pacing)
+FILTER_CAP, INSPECT_CAP = 7.7, 14.0   # capture-time of the filter click / item open (from your capture.js pacing)
 LEAD, TAIL = 0.4, 0.4
 
 # Spoken narration lines (the TTS source) — ONE per beat, clean text (no parens/version #s; em-dash -> comma).
 # Keep in sync with the EN captions below. `python narrate.py --lines` prints them (scripts/variant.sh TTS's them).
 SPOKEN = [
-    "The Nevermined catalog. Pay-per-call AI services.",
-    "Browse over 149 curated services. Call them from a prompt, an MCP server, or the router.",
-    "Filter by category to narrow the list. Here, Crypto and Blockchain.",
-    "Open any service to see what it does, its price, and how to call it with a single API key.",
-    "Start building at nevermined.app/catalog.",
+    "Acme. The fastest way to ship your product.",
+    "Browse everything in one place. Clean, fast, and built for teams.",
+    "Filter to find exactly what you need in seconds.",
+    "Open any item to see the detail, the price, and how to get started.",
+    "Start building at acme.com.",
 ]
 if "--lines" in sys.argv:            # print the spoken lines (for the variant helper to TTS), then exit
     print("\n".join(SPOKEN)); raise SystemExit
@@ -65,16 +65,16 @@ with wave.open('voice.wav', 'wb') as w:
 def ts(x):
     ms = int(round(x * 1000))
     return f"{ms//3600000:02d}:{ms%3600000//60000:02d}:{ms%60000//1000:02d},{ms%1000:03d}"
-EN = ["The Nevermined catalog —\npay-per-call AI services.",
-      "Browse 149+ curated services — call them\nfrom a prompt, an MCP server, or the router.",
-      "Filter by category to narrow the list —\nhere, Crypto & Blockchain.",
-      "Open any service to see what it does, its price,\nand how to call it with a single API key.",
-      "Start building at nevermined.app/catalog."]
-ES = ["El catálogo de Nevermined:\nservicios de IA de pago por uso.",
-      "Explora más de 149 servicios verificados: llámalos\ndesde un prompt, un servidor MCP o el router.",
-      "Filtra por categoría para acotar la lista:\naquí, Cripto y Blockchain.",
-      "Abre cualquier servicio para ver qué hace, su precio\ny cómo llamarlo con una sola clave API.",
-      "Empieza a construir en nevermined.app/catalog."]
+EN = ["Acme — the fastest way\nto ship your product.",
+      "Browse everything in one place —\nclean, fast, built for teams.",
+      "Filter to find exactly\nwhat you need in seconds.",
+      "Open any item for the detail,\nthe price, and how to start.",
+      "Start building at acme.com."]
+ES = ["Acme: la forma más rápida\nde lanzar tu producto.",
+      "Explóralo todo en un solo lugar:\nrápido y hecho para equipos.",
+      "Filtra para encontrar justo\nlo que necesitas en segundos.",
+      "Abre cualquier elemento para ver el detalle,\nel precio y cómo empezar.",
+      "Empieza a construir en acme.com."]
 for lang, txt in (('en', EN), ('es', ES)):
     out = [f"{i}\n{ts(s)} --> {ts(s + d)}\n{t}\n" for i, (s, d, t) in enumerate(zip(starts, dur, txt), 1)]
     open(f"captions.{lang}.srt", 'w').write("\n".join(out))

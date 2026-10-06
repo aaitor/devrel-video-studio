@@ -32,39 +32,39 @@ Requirements: Node 22+, FFmpeg, Chromium (see the guide §5). Everything runs lo
 Paste any of these to Claude Code:
 
 **Without a talking head** (silent or voiceover only):
-- **Silent tour** — `use /devrel-video to make a silent walkthrough of https://nevermined.app/catalog, showing browse → filter by category → open a service`
-- **Narrated** — `use /devrel-video for https://nevermined.app/catalog: narrated walkthrough (male voice) + background music + English & Spanish subtitles`
-- **Pick / swap the voice** — `…narrate it with voice dan`, or later `regenerate nevermined-catalog with voice leah` — the voice is a prompt parameter; each is a new variant (male leo/dan/zac, female leah/tara/jess/mia/zoe — match the presenter). Under the hood one command does it all: `scripts/variant.sh projects/<slug> <voice>` (re-TTS → auto-retime → mix → re-lip-sync the avatar → render) → `renders/out-<voice>.mp4`
-- **Reuse a brand** — `use /devrel-video for https://nevermined.app/pricing using the nevermined brand; show the plan comparison then the checkout`
+- **Silent tour** — `use /devrel-video to make a silent walkthrough of https://demo.realworld.io, showing browse → filter by tag → open an article`
+- **Narrated** — `use /devrel-video for https://acme.com/app: narrated walkthrough (male voice) + background music + English & Spanish subtitles`
+- **Pick / swap the voice** — `…narrate it with voice dan`, or later `regenerate example-walkthrough with voice leah` — the voice is a prompt parameter; each is a new variant (male leo/dan/zac, female leah/tara/jess/mia/zoe — match the presenter). Under the hood one command does it all: `scripts/variant.sh projects/<slug> <voice>` (re-TTS → auto-retime → mix → re-lip-sync the avatar → render) → `renders/out-<voice>.mp4`
+- **Reuse a brand** — `use /devrel-video for https://acme.com/pricing using the acme brand; show the plan comparison then the checkout`
 - **New brand** — `use /devrel-video for https://acme.com/app — extract the acme brand first, then walk sign-up → dashboard`
 - **Local product** — `use /devrel-video on my local app at http://localhost:3000 (start: npm run dev): sign-up → create a project → invite a teammate`
 
 **With a talking head** (presenter bubble at intro/CTA — see [Talking-head avatar](#talking-head-avatar-bring-your-own) below):
-- **Narrated + your avatar** — `use /devrel-video for https://nevermined.app/catalog: narrated (voice leo) with my talking-head avatar at the intro and CTA. My plate is at ~/Videos/Nevermined/DevRel/Talking_Head/Aitor/shorter_but_better.mp4`
+- **Narrated + your avatar** — `use /devrel-video for https://acme.com/app: narrated (voice leo) with my talking-head avatar at the intro and CTA. My plate is at ~/Videos/<Org>/DevRel/Talking_Head/<name>/plate.mp4`
 - **Avatar at intro only** — `…add my talking-head only at the intro, then let the product run full-screen` (plate as above)
 - **Pick the voice** — `…use a male voice — show me leo / dan / zac samples first` (the voice should match the presenter's)
 
 **Terminal + browser** (multi-environment — the demo switches between Claude Code and the web):
-- **CLI → browser → CLI** — `use /devrel-video for a tour that starts in Claude Code (prompt: "find me an AI weather agent I can call and pay for"), switches to nevermined.app/catalog, then back to Claude Code to pay it over MCP` — terminal beats are captured as real, sanitized Claude Code sessions; beats hand off with a smooth fade through the brand colour. See [`projects/nevermined-cli-tour/`](projects/nevermined-cli-tour/).
+- **CLI → browser → CLI** — `use /devrel-video for a tour that starts in Claude Code (prompt: "find me an AI weather agent I can call and pay for"), switches to acme.com/app, then back to Claude Code to pay it over MCP` — terminal beats are captured as real, sanitized Claude Code sessions; beats hand off with a smooth fade through the brand colour. See the re-enactment template [`.claude/skills/devrel-video/templates/cc-terminal.html`](.claude/skills/devrel-video/templates/cc-terminal.html).
 - **All in Claude Code** — `…make it entirely inside a Claude Code session — no browser` (one terminal frame for the whole runtime)
 
 **Tweaks** (either mode):
-- **Pin an element** — `…open the AgentOracle service specifically` (exact `a[href="…"]` in `capture.js`, no fallback)
-- **Re-render** — `re-render nevermined-catalog with a slower detail scroll and a "Read the docs" CTA`
+- **Pin an element** — `…open a specific item` (exact `a[href="…"]` in `capture.js`, no fallback)
+- **Re-render** — `re-render example-walkthrough with a slower detail scroll and a "Read the docs" CTA`
 - **Different length** — `make it ~45s with four chapters`, or `cut a 15s teaser`
 
 The skill gathers anything it still needs (audience, the one message, approved claims, and — for an avatar — your plate path) before recording.
 
 ## Worked example
 
-`projects/nevermined-catalog/` — a ~27s narrated tour of the Nevermined AI Services catalog
-(browse → filter → inspect a service) with music, en/es subtitles, and a presenter avatar at the intro/CTA.
-See its README for the exact commands used.
+`projects/example-walkthrough/` — a ~24s silent tour of a public demo app (browse → filter by tag → open an
+article), framed and chaptered with the pipeline and branded with the default **Acme** placeholder brand.
+See its README for the exact commands — swap the URL and brand for your own.
 
 ## Optional layers (all supported)
 
 Music, narration (Orpheus TTS — male `leo`/`dan`/`zac` or female `leah`/`tara`/`jess`/`mia`/`zoe`; match it to
-your presenter), a **face-only presenter avatar** (LatentSync on Melkor's AMD GPU, lip-synced, shown briefly at
+your presenter), a **face-only presenter avatar** (LatentSync on your own GPU host, lip-synced, shown briefly at
 intro/CTA), multi-language subtitles, and **multi-environment demos** that switch between Claude Code (terminal)
 and the browser — steps 5.4–5.8 of the skill. Still on the roadmap: portrait/social output profiles. Details in
 [`.claude/skills/devrel-video/references/production-notes.md`](.claude/skills/devrel-video/references/production-notes.md).
