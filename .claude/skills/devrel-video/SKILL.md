@@ -76,6 +76,9 @@ For a demo that moves between the CLI and the web (e.g. **prompt in Claude Code 
 - Security: no keys/wallets/PII; all CDN assets vendored for confidential projects.
 - Terminal beats: sanitized — no host paths, no "transcript saving is off" / MCP-auth warnings, no onboarding popups on screen.
 
+### 6.1 · Thumbnail (required deliverable)
+Every video also ships a **YouTube thumbnail** (not just the QA contact sheet): copy `templates/thumbnail.html` → `projects/<slug>/thumbnail.html`, fill it from the brief + `brands/<name>/tokens.json` (kicker, headline, url label), then `scripts/thumbnail.sh projects/<slug>` → `renders/thumbnail.jpg` (1280×720, <2MB; pulls the hero shot from `capture.mp4`). For a README/social loop, a short GIF off the master: `ffmpeg -ss <t> -to <t> -i renders/out.mp4 -vf "fps=12,scale=880:-1,palettegen" …` → `paletteuse`.
+
 ## Delegation map — do not reinvent
 
 | Need | Use |
@@ -90,6 +93,7 @@ For a demo that moves between the CLI and the web (e.g. **prompt in Claude Code 
 | Narration timing → composition | `templates/narrate.py` (writes `timing.json`) + `scripts/retime.py` |
 | Swap the narration voice (whole re-gen) | `scripts/variant.sh <project> <voice>` |
 | Master / convert / QA | FFmpeg / ffprobe (`scripts/render-qa.sh`) |
+| YouTube thumbnail (1280×720) | `scripts/thumbnail.sh` (`templates/thumbnail.html`) |
 
 ## Roadmap
 

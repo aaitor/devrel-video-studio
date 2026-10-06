@@ -6,6 +6,14 @@ master with **FFmpeg** — orchestrated by the `/devrel-video` skill.
 
 Full design + rationale: [`local-devrel-video-studio-guide.md`](local-devrel-video-studio-guide.md) (v1.2).
 
+## Demo
+
+![DevRel Video Studio — example walkthrough](projects/example-walkthrough/renders/demo.gif)
+
+A ~26s narrated demo produced end-to-end by this studio — the [`example-walkthrough`](projects/example-walkthrough/)
+project (a self-contained sample app, captured silently; narration + music + EN/ES subtitles added with one
+`variant.sh` command). <!-- YT --> Full video with sound on YouTube *(link coming soon)*.
+
 ## Layout
 
 ```

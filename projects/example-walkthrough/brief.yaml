@@ -1,6 +1,6 @@
 # devrel-video project manifest — a worked example. Silent, browser-only tour of a public demo app.
 id: example-walkthrough
-mode: silent-demo
+mode: narrated-devrel         # ships both a silent cut and this narrated one (voice leah + music + EN/ES subs)
 audience: developers evaluating a product
 message: "You can browse, filter, and open content in seconds"
 cta:
@@ -34,10 +34,11 @@ approved_claims:              # only on-page / verifiable text may appear on scr
 outputs:
   - profile: docs-16x9        # 1920x1080, silent
 
-# Optional layers are off for this example (narration/avatar need a TTS endpoint / GPU host — see scripts/_env.sh).
+# Narration + music + subtitles are ON (one command: scripts/variant.sh <proj> leah --no-avatar).
+# TTS needs an endpoint — see scripts/_env.sh. Avatar stays off (no presenter for a fictional brand).
 audio:
-  music: null
-  narration: null
+  music: bgm                  # local license-clean bed (gen-bgm.py), ducked under the voice (mix-audio.sh)
+  narration: leah             # Orpheus voice; swap with variant.sh <proj> <voice>
   avatar: null
   avatar_plate: null
-  subtitles: []
+  subtitles: [en, es]         # captions.en.srt / captions.es.srt (re-timed to the voice)
