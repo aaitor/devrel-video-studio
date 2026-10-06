@@ -83,6 +83,29 @@ intro/CTA), multi-language subtitles, and **multi-environment demos** that switc
 and the browser — steps 5.4–5.8 of the skill. Still on the roadmap: portrait/social output profiles. Details in
 [`.claude/skills/devrel-video/references/production-notes.md`](.claude/skills/devrel-video/references/production-notes.md).
 
+## Music & voice
+
+Both are prompt-selectable — set them in the brief's `audio:` block, or on the command.
+
+**Music bed** — six local, license-clean styles (`scripts/gen-bgm.py`; default **`corporate`**). Pick one with
+`BGM_STYLE=<style>` or `audio.music: <style>` in the brief:
+
+| Style | Feel |
+|---|---|
+| `corporate` *(default)* | Clean, optimistic, steady — classic product-demo |
+| `ambient` | Slow, warm pad + Rhodes, no drums — premium / focused |
+| `lofi` | Mellow chords + soft beat — cozy, friendly |
+| `uplift` | Bright pad + arpeggio + light beat — energetic |
+| `minimal` | Sparse keys + pad swells — airy, elegant |
+| `focus` | Pad + pulsing bass, minimal melody — subdued, technical |
+
+Audition any style: `scripts/gen-bgm.py sample.wav 15 <style>`.
+
+**Narration voice** — the reference TTS (Orpheus) offers male `leo` / `dan` / `zac` and female `leah` / `tara` /
+`jess` / `mia` / `zoe`. Set `audio.narration: <voice>` in the brief, or swap after the fact with one command:
+`scripts/variant.sh projects/<slug> <voice>` (match the voice to your presenter). Narration needs a TTS
+endpoint — see [`scripts/_env.sh`](.claude/skills/devrel-video/scripts/_env.sh).
+
 ## Talking-head avatar (bring your own)
 
 The presenter bubble is **your own face** — you supply the recording; this studio never bundles a face.

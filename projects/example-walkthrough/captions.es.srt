@@ -1,24 +1,24 @@
 1
-00:00:00,400 --> 00:00:03,904
+00:00:00,400 --> 00:00:03,424
 Acme: todo lo que tu equipo entrega,
 en un solo lugar.
 
 2
-00:00:04,604 --> 00:00:07,657
+00:00:04,124 --> 00:00:06,999
 Tu espacio muestra cada
 proyecto de un vistazo.
 
 3
-00:00:12,104 --> 00:00:15,017
+00:00:11,624 --> 00:00:14,018
 Filtra por categoría para encontrar
 exactamente lo que necesitas.
 
 4
-00:00:18,404 --> 00:00:21,182
+00:00:17,924 --> 00:00:21,152
 Abre cualquier proyecto para ver
 el detalle y las métricas.
 
 5
-00:00:21,874 --> 00:00:24,894
+00:00:21,394 --> 00:00:24,972
 Crea el tuyo con el DevRel Video Studio,
 de código abierto.

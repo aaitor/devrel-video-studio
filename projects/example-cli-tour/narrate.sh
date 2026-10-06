@@ -14,7 +14,7 @@ i=1; for line in "${LINES[@]}"; do "$S/tts.sh" "$line" "$PROJ/vo$i.wav" "$VOICE"
 echo "[narrate] place voice + write captions"
 ( cd "$PROJ" && python3 narrate.py >/dev/null )
 
-echo "[narrate] studio music bed + ducked mix"
-BGM_STYLE=studio python3 "$S/gen-bgm.py" "$PROJ/bgm.wav" "$TOTAL" >/dev/null
+echo "[narrate] music bed + ducked mix"
+python3 "$S/gen-bgm.py" "$PROJ/bgm.wav" "$TOTAL" >/dev/null   # default style (corporate); set BGM_STYLE to change
 "$S/mix-audio.sh" "$PROJ/bgm.wav" "$PROJ/voice.wav" "$PROJ/narration-mix.mp3" >/dev/null
 echo "[narrate] ✓ $PROJ/narration-mix.mp3"

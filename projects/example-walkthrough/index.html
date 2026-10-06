@@ -54,12 +54,12 @@
       </symbol>
     </svg>
 
-    <div id="root" data-composition-id="main" data-start="0" data-duration="25.39" data-width="1920" data-height="1080">
+    <div id="root" data-composition-id="main" data-start="0" data-duration="25.47" data-width="1920" data-height="1080">
 
-      <div id="bg" class="clip fill bg" data-start="0" data-duration="25.39" data-track-index="0" style="z-index:0"></div>
+      <div id="bg" class="clip fill bg" data-start="0" data-duration="25.47" data-track-index="0" style="z-index:0"></div>
 
       <!-- Scene 1 — title -->
-      <div id="title" class="clip fill center bg" data-start="0" data-duration="4.3" data-track-index="1" style="z-index:5">
+      <div id="title" class="clip fill center bg" data-start="0" data-duration="3.82" data-track-index="1" style="z-index:5">
         <svg class="wordmark" viewBox="0 0 132 24" width="220" height="40" style="margin-bottom:10px"><use href="#brand-logo" /></svg>
         <div class="kicker">Product walkthrough</div>
         <div class="t-title">Everything your team ships, <span class="hl">in one place.</span></div>
@@ -67,7 +67,7 @@
       </div>
 
       <!-- Scene 2 — framed product footage -->
-      <div id="frame" class="clip" data-start="4.3" data-duration="17.37" data-track-index="1">
+      <div id="frame" class="clip" data-start="3.82" data-duration="17.37" data-track-index="1">
         <div class="bar">
           <span class="dot" style="background:#ff5f57"></span>
           <span class="dot" style="background:#febc2e"></span>
@@ -75,19 +75,19 @@
           <span class="url">acme.com</span>
         </div>
       </div>
-      <video id="a-roll" class="clip" src="capture.mp4" muted playsinline data-start="4.3" data-duration="17.37" data-track-index="0"></video>
-      <svg id="brandmark" class="clip wordmark" viewBox="0 0 132 24" width="132" height="24" data-start="4.3" data-duration="17.37" data-track-index="2"><use href="#brand-logo" /></svg>
+      <video id="a-roll" class="clip" src="capture.mp4" muted playsinline data-start="3.82" data-duration="17.37" data-track-index="0"></video>
+      <svg id="brandmark" class="clip wordmark" viewBox="0 0 132 24" width="132" height="24" data-start="3.82" data-duration="17.37" data-track-index="2"><use href="#brand-logo" /></svg>
 
       <!-- chapter lower-thirds — data-start = 3.0 + capture-beat time -->
-      <div id="ch1" class="clip chapter" data-start="4.6" data-duration="7.5" data-track-index="3"><span class="d"></span> Your workspace</div>
-      <div id="ch2" class="clip chapter" data-start="12.3" data-duration="6.1" data-track-index="3"><span class="d"></span> Filter by category</div>
-      <div id="ch3" class="clip chapter" data-start="18.6" data-duration="3.07" data-track-index="3"><span class="d"></span> Open a project</div>
+      <div id="ch1" class="clip chapter" data-start="4.12" data-duration="7.5" data-track-index="3"><span class="d"></span> Your workspace</div>
+      <div id="ch2" class="clip chapter" data-start="11.82" data-duration="6.1" data-track-index="3"><span class="d"></span> Filter by category</div>
+      <div id="ch3" class="clip chapter" data-start="18.12" data-duration="3.07" data-track-index="3"><span class="d"></span> Open a project</div>
 
       <!-- Audio — ducked music bed + narration pre-mixed (scripts/variant.sh → narration-mix.mp3) -->
-      <audio id="bgm" class="clip" src="narration-mix.mp3" data-start="0" data-duration="25.39" data-track-index="9" data-volume="1"></audio>
+      <audio id="bgm" class="clip" src="narration-mix.mp3" data-start="0" data-duration="25.47" data-track-index="9" data-volume="1"></audio>
 
       <!-- Scene 3 — CTA -->
-      <div id="cta" class="clip fill center bg" data-start="21.67" data-duration="3.72" data-track-index="4" style="z-index:8">
+      <div id="cta" class="clip fill center bg" data-start="21.19" data-duration="4.28" data-track-index="4" style="z-index:8">
         <svg class="wordmark" viewBox="0 0 132 24" width="220" height="40" style="margin-bottom:34px"><use href="#brand-logo" /></svg>
         <div class="cta-title">Make your own</div>
         <div class="cta-url">github.com/aaitor/devrel-video-studio</div>
@@ -102,15 +102,15 @@
       tl.from("#title .kicker",   { opacity: 0, y: -18, duration: 0.6 }, 0.25);
       tl.from("#title .t-title",  { opacity: 0, y: 34, duration: 0.7 }, 0.45);
       tl.from("#title .t-sub",    { opacity: 0, y: 20, duration: 0.6 }, 0.8);
-      tl.from("#frame",  { opacity: 0, scale: 0.95, duration: 0.6 }, 4.3);
-      tl.from("#a-roll", { opacity: 0, scale: 0.95, duration: 0.6 }, 4.3);
-      tl.from("#brandmark", { opacity: 0, duration: 0.5 }, 4.6);
-      tl.from("#ch1", { opacity: 0, x: -26, duration: 0.5 }, 4.7);
-      tl.from("#ch2", { opacity: 0, x: -26, duration: 0.5 }, 12.4);
-      tl.from("#ch3", { opacity: 0, x: -26, duration: 0.5 }, 18.7);
-      tl.from("#cta .wordmark",  { opacity: 0, y: 22, duration: 0.5 }, 21.77);
-      tl.from("#cta .cta-title", { opacity: 0, y: 28, duration: 0.6 }, 21.9);
-      tl.from("#cta .cta-url",   { opacity: 0, y: 20, duration: 0.6 }, 22.15);
+      tl.from("#frame",  { opacity: 0, scale: 0.95, duration: 0.6 }, 3.82);
+      tl.from("#a-roll", { opacity: 0, scale: 0.95, duration: 0.6 }, 3.82);
+      tl.from("#brandmark", { opacity: 0, duration: 0.5 }, 4.12);
+      tl.from("#ch1", { opacity: 0, x: -26, duration: 0.5 }, 4.22);
+      tl.from("#ch2", { opacity: 0, x: -26, duration: 0.5 }, 11.92);
+      tl.from("#ch3", { opacity: 0, x: -26, duration: 0.5 }, 18.22);
+      tl.from("#cta .wordmark",  { opacity: 0, y: 22, duration: 0.5 }, 21.29);
+      tl.from("#cta .cta-title", { opacity: 0, y: 28, duration: 0.6 }, 21.42);
+      tl.from("#cta .cta-url",   { opacity: 0, y: 20, duration: 0.6 }, 21.67);
       window.__timelines["main"] = tl;
     </script>
   </body>

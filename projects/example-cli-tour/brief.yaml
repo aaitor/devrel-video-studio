@@ -44,7 +44,7 @@ outputs:
   - profile: docs-16x9
 
 audio:
-  music: studio               # gen-bgm.py "studio" style (112 BPM), ducked under the voice
+  music: corporate            # gen-bgm.py "corporate" style (see README "Music & voice"), ducked under the voice
   narration: leah             # fixed-beat narration — narrate.sh → narration-mix.mp3 (beats are not voice-driven)
   avatar: null
   avatar_plate: null
