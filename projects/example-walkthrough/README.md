@@ -6,7 +6,9 @@ dependency) and frames it with the default **Acme** brand (`brands/acme/`). It s
 **narrated** one (voice `leah` + a ducked music bed + EN/ES subtitles, ~26s). Swap `./site/` for your real
 product URL and the brand, and you have your own video.
 
-![example walkthrough](renders/demo.gif)
+[![example walkthrough](renders/demo.gif)](https://youtu.be/H6npd3uuqls)
+
+▶ [Watch the full video with sound on YouTube](https://youtu.be/H6npd3uuqls).
 
 > `capture.mp4` and `renders/*.mp4` are **gitignored** — regenerate them by running the pipeline. Committed:
 > `brief.yaml`, `capture.js`, `site/`, `index.html`, `narrate.py`, `captions.*.srt`, and

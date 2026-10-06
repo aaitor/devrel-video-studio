@@ -9,16 +9,16 @@ Full design + rationale: [`local-devrel-video-studio-guide.md`](local-devrel-vid
 ## Demos
 
 **Claude Code ⇄ browser** — a prompt in Claude Code drives a live browser capture, then hands the result back,
-all in one cut with fade-through-brand transitions ([`example-cli-tour`](projects/example-cli-tour/)):
+all in one cut with fade-through-brand transitions ([`example-cli-tour`](projects/example-cli-tour/)) ·
+[**▶ watch with sound**](https://youtu.be/lvpKaYUVNws):
 
-![Claude Code drives the browser](projects/example-cli-tour/renders/demo.gif)
+[![Claude Code drives the browser](projects/example-cli-tour/renders/demo.gif)](https://youtu.be/lvpKaYUVNws)
 
 **Narrated product walkthrough** — a self-contained sample app, captured silently, with narration + a music bed +
-EN/ES subtitles added by one `variant.sh` command ([`example-walkthrough`](projects/example-walkthrough/)):
+EN/ES subtitles added by one `variant.sh` command ([`example-walkthrough`](projects/example-walkthrough/)) ·
+[**▶ watch with sound**](https://youtu.be/H6npd3uuqls):
 
-![example walkthrough](projects/example-walkthrough/renders/demo.gif)
-
-<!-- YT --> Full videos with sound on YouTube *(links coming soon)*.
+[![example walkthrough](projects/example-walkthrough/renders/demo.gif)](https://youtu.be/H6npd3uuqls)
 
 ## Layout
 

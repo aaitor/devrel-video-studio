@@ -4,7 +4,9 @@ A **multi-environment** demo: the cut moves between **Claude Code (terminal)** a
 in Claude Code → the Acme product recorded live in the browser → back to Claude Code with the result — and each
 beat hands off by fading through the brand colour (SKILL §5.8).
 
-![claude code ⇄ browser demo](renders/demo.gif)
+[![claude code ⇄ browser demo](renders/demo.gif)](https://youtu.be/lvpKaYUVNws)
+
+▶ [Watch the full video with sound on YouTube](https://youtu.be/lvpKaYUVNws).
 
 The terminal beats are the **deterministic HTML re-enactment** (`templates/cc-terminal.html`, composed inline in
 `index.html`): the prompt is typed with a GSAP `steps()` typewriter and the answer revealed line by line — no
