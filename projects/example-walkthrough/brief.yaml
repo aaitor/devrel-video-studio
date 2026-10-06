@@ -10,10 +10,10 @@ duration_target_seconds: 24
 brand: acme                   # brands/acme/ — the default placeholder brand (swap for a real one)
 
 capture:
-  url: "https://demo.realworld.io/"   # public RealWorld demo app (no login, no PII) — stands in for "your product"
-  start_command: null
+  url: "http://localhost:8000/"       # the self-contained Acme mock app in ./site/ (no login, no PII, no external deps)
+  start_command: "python3 -m http.server 8000 --directory projects/example-walkthrough/site"
   viewport: "1600x900"
-  url_label: "demo.realworld.io"      # honest: the frame shows the real captured URL
+  url_label: "acme.com"               # the frame shows the product's canonical domain (it IS the Acme app)
 
 environments: []              # pure-browser (the default). Multi-env (terminal ⇄ browser) is optional — SKILL §5.8.
 terminal:
@@ -21,15 +21,15 @@ terminal:
 
 # chapter data-start = 3.0 (title) + at_seconds. Re-sync at_seconds to your capture.js pacing after recording.
 beats:
-  - label: "The global feed"
+  - label: "Your workspace"
     at_seconds: 0.3
-  - label: "Filter by tag"
-    at_seconds: 7.5
-  - label: "Open an article"
-    at_seconds: 13.8
+  - label: "Filter by category"
+    at_seconds: 7.8
+  - label: "Open a project"
+    at_seconds: 12.6
 
 approved_claims:              # only on-page / verifiable text may appear on screen — never invented
-  - "Captured live from the public RealWorld demo app."
+  - "Everything your team ships, in one place."
 
 outputs:
   - profile: docs-16x9        # 1920x1080, silent
