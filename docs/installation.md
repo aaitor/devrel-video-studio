@@ -1,12 +1,21 @@
 # Installation
 
+The repository is now `aaitor/skill-video-studio`. Existing clones can update their remote:
+
+```bash
+git remote set-url origin https://github.com/aaitor/skill-video-studio.git
+```
+
+The Claude Code skill remains `/devrel-video`.
+
+
 The repository is the workspace: the skill lives at `.claude/skills/devrel-video`, while brands and video projects live at the root. Preserve that layout rather than cloning the whole studio inside another skill directory.
 
 ## Open in Claude Code
 
 ```bash
-git clone https://github.com/aaitor/devrel-video-studio.git
-cd devrel-video-studio
+git clone https://github.com/aaitor/skill-video-studio.git
+cd skill-video-studio
 claude
 ```
 

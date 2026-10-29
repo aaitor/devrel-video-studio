@@ -11,7 +11,7 @@ Prepare only the intake brief and beat plan. Do not open a browser, capture, ren
 - Local fixture: projects/example-walkthrough/site/ served at http://localhost:8000/
 - Start command for a later capture: python3 -m http.server 8000 --directory projects/example-walkthrough/site
 - Flow: show workspace → filter by category → open a project
-- CTA: "Make your own"; github.com/aaitor/devrel-video-studio
+- CTA: "Make your own"; github.com/aaitor/skill-video-studio
 - No narration, music, avatar, subtitles, or terminal/browser scene switching.
 
 Read the actual brief template, brand tokens, and fixture source. Create projects/demo/brief.yaml with the same schema, adapted to the inputs above. Show a concise three-beat plan and stop before running production commands.

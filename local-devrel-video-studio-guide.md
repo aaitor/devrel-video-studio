@@ -302,7 +302,7 @@ Restart Claude Code so the skill is discovered.
 Create a dedicated repository rather than mixing video assets directly into the web application's source tree.
 
 ```text
-devrel-video-studio/
+skill-video-studio/
 ├── .claude/
 │   ├── settings.json
 │   └── skills/

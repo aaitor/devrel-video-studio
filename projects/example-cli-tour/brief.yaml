@@ -5,7 +5,7 @@ audience: developers evaluating the studio
 message: "Claude Code drives the browser and ships a polished demo video"
 cta:
   title: "Make your own"
-  url: "github.com/aaitor/devrel-video-studio"
+  url: "github.com/aaitor/skill-video-studio"
 duration_target_seconds: 27
 brand: acme
 

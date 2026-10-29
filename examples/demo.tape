@@ -13,7 +13,7 @@ Type "export PS1='$ '; set -o pipefail; source demo-shell.sh; clear"
 Enter
 Sleep 500ms
 Show
-Type "git clone https://github.com/aaitor/devrel-video-studio studio"
+Type "git clone https://github.com/aaitor/skill-video-studio studio"
 Sleep 500ms
 Hide
 Enter

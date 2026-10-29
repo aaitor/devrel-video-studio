@@ -434,7 +434,7 @@ Scripts, product captures, composition, review and final encoding can remain loc
 ## 14. Suggested project structure
 
 ```text
-devrel-video-studio/
+skill-video-studio/
 ├── .claude/
 │   └── skills/
 │       └── devrel-video/

@@ -12,7 +12,7 @@
 </p>
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-89E5CC?style=flat-square&amp;labelColor=101827" alt="MIT license"></a>
-  <a href="https://github.com/aaitor/devrel-video-studio/actions/workflows/quality.yml"><img src="https://github.com/aaitor/devrel-video-studio/actions/workflows/quality.yml/badge.svg" alt="Offline source and documentation checks"></a>
+  <a href="https://github.com/aaitor/skill-video-studio/actions/workflows/quality.yml"><img src="https://github.com/aaitor/skill-video-studio/actions/workflows/quality.yml/badge.svg" alt="Offline source and documentation checks"></a>
 </p>
 
 A local video-production workspace driven by the **`/devrel-video` Claude Code skill**. Capture real product interactions with Playwright CLI, compose title cards, chapters, and CTAs with HyperFrames, then master and inspect the result with FFmpeg. Start with a silent walkthrough; add narration, music, subtitles, or your own presenter footage when needed.
@@ -28,8 +28,8 @@ A real Claude Code session using the installed project skill: clone the studio, 
 **For planning:** Git and authenticated Claude Code. Clone the full workspace so its native skill and project layout stay together:
 
 ```bash
-git clone https://github.com/aaitor/devrel-video-studio.git
-cd devrel-video-studio
+git clone https://github.com/aaitor/skill-video-studio.git
+cd skill-video-studio
 claude
 ```
 
@@ -107,7 +107,7 @@ docs/                       Onboarding, usage, configuration, troubleshooting
 
 ## Contributing and support
 
-Use [Issues](https://github.com/aaitor/devrel-video-studio/issues) for questions, bugs, and ideas. Read [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md); report vulnerabilities privately through [SECURITY.md](SECURITY.md).
+Use [Issues](https://github.com/aaitor/skill-video-studio/issues) for questions, bugs, and ideas. Read [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md); report vulnerabilities privately through [SECURITY.md](SECURITY.md).
 
 Install `requirements-dev.txt` in a virtual environment and run `python3 scripts/check.py`. See [CHANGELOG.md](CHANGELOG.md) for changes. Live recordings, service calls, GPU jobs, and full renders are manual validation steps.
 
