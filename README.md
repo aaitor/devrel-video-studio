@@ -1,124 +1,120 @@
-# DevRel Video Studio
+<p align="center">
+  <img src="https://raw.githubusercontent.com/aaitor/assets/57ffb65100e722a14713c546690cd4a90cf6355d/banners/devrel-video-studio.svg" alt="DevRel Video Studio — from product workflow to polished demo" width="100%">
+</p>
 
-Local, Claude Code–driven system that records web-product walkthroughs and composes them into
-professional silent demo videos. Capture with **Playwright CLI**, compose + render with **HyperFrames**,
-master with **FFmpeg** — orchestrated by the `/devrel-video` skill.
+<h1 align="center">DevRel Video Studio</h1>
+<p align="center">From product workflow to polished demo.</p>
+<p align="center">
+  <a href="#quick-start">Quick start</a> ·
+  <a href="#worked-videos">Worked videos</a> ·
+  <a href="docs/usage.md">Usage</a> ·
+  <a href="#contributing-and-support">Contribute</a>
+</p>
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-89E5CC?style=flat-square&amp;labelColor=101827" alt="MIT license"></a>
+  <a href="https://github.com/aaitor/devrel-video-studio/actions/workflows/quality.yml"><img src="https://github.com/aaitor/devrel-video-studio/actions/workflows/quality.yml/badge.svg" alt="Offline source and documentation checks"></a>
+</p>
 
-Full design + rationale: [`local-devrel-video-studio-guide.md`](local-devrel-video-studio-guide.md) (v1.2).
+A local video-production workspace driven by the **`/devrel-video` Claude Code skill**. Capture real product interactions with Playwright CLI, compose title cards, chapters, and CTAs with HyperFrames, then master and inspect the result with FFmpeg. Start with a silent walkthrough; add narration, music, subtitles, or your own presenter footage when needed.
 
-## Demos
+## Demo
 
-**Claude Code ⇄ browser** — a prompt in Claude Code drives a live browser capture, then hands the result back,
-all in one cut with fade-through-brand transitions ([`example-cli-tour`](projects/example-cli-tour/)) ·
-[**▶ watch with sound**](https://youtu.be/lvpKaYUVNws):
+![Install DevRel Video Studio and prepare a real walkthrough brief in Claude Code](assets/terminal-demo.gif)
 
-[![Claude Code drives the browser](projects/example-cli-tour/renders/demo.gif)](https://youtu.be/lvpKaYUVNws)
-
-**Narrated product walkthrough** — a self-contained sample app, captured silently, with narration + a music bed +
-EN/ES subtitles added by one `variant.sh` command ([`example-walkthrough`](projects/example-walkthrough/)) ·
-[**▶ watch with sound**](https://youtu.be/H6npd3uuqls):
-
-[![example walkthrough](projects/example-walkthrough/renders/demo.gif)](https://youtu.be/H6npd3uuqls)
-
-## Layout
-
-```
-.claude/skills/devrel-video/   # the skill: SKILL.md, templates/, scripts/, references/
-brands/<name>/                 # real brand tokens + logo (tokens.json, logo.svg, DESIGN.md)
-projects/<slug>/               # one video: brief.yaml, capture.js, index.html, renders/
-```
+A real Claude Code session using the installed project skill: clone the studio, prepare an Acme walkthrough brief, and inspect the three-beat plan on a black background. This short demo stops **before capture and rendering**; it does not claim a video was produced. The [recording guide](examples/README.md) includes the actual generated brief and reproduction command.
 
 ## Quick start
 
-Ask Claude Code: **"use /devrel-video to make a walkthrough of `<URL>`, showing `<flow>`."** It will:
+**For planning:** Git and authenticated Claude Code. Clone the full workspace so its native skill and project layout stay together:
 
-1. **Intake** — fill `projects/<slug>/brief.yaml` from `templates/brief.example.yaml`.
-2. **Explore** — open the URL, confirm no login/PII, find stable selectors.
-3. **Brand** — `scripts/brand-extract.sh <url> <name>` → `brands/<name>/`.
-4. **Capture** — edit `templates/hero-script.js` → `capture.js`; `scripts/capture.sh <capture.js> <url>`.
-5. **Compose** — `hyperframes init … --video capture.mp4`; fill `templates/composition.html`.
-6. **Render + QA** — `scripts/render-qa.sh projects/<slug>` → master + web copy + ffprobe + contact sheet.
+```bash
+git clone https://github.com/aaitor/devrel-video-studio.git
+cd devrel-video-studio
+claude
+```
 
-Requirements: Node 22+, FFmpeg, Chromium (see the guide §5). Everything runs locally; telemetry off.
+Ask Claude:
 
-## Example prompts
+```text
+/devrel-video Prepare a 25-second silent walkthrough brief for the bundled
+Acme app: show the workspace, filter by category, then open a project.
+Reuse brands/acme. Show the plan before capture or rendering.
+```
 
-Paste any of these to Claude Code:
+Expected result: a project brief and a concrete beat plan. For a complete video, install the [capture/render prerequisites](docs/installation.md#capture-and-rendering-prerequisites) and follow the [worked walkthrough](projects/example-walkthrough/README.md). The production stack needs Node.js 22+, FFmpeg/ffprobe, Chromium, and the helper-specific Python dependencies. Optional narration and avatars require your own additional services or GPU setup.
 
-**Without a talking head** (silent or voiceover only):
-- **Silent tour** — `use /devrel-video to make a silent walkthrough of https://demo.realworld.io, showing browse → filter by tag → open an article`
-- **Narrated** — `use /devrel-video for https://acme.com/app: narrated walkthrough (male voice) + background music + English & Spanish subtitles`
-- **Pick / swap the voice** — `…narrate it with voice dan`, or later `regenerate example-walkthrough with voice leah` — the voice is a prompt parameter; each is a new variant (male leo/dan/zac, female leah/tara/jess/mia/zoe — match the presenter). Under the hood one command does it all: `scripts/variant.sh projects/<slug> <voice>` (re-TTS → auto-retime → mix → re-lip-sync the avatar → render) → `renders/out-<voice>.mp4`
-- **Reuse a brand** — `use /devrel-video for https://acme.com/pricing using the acme brand; show the plan comparison then the checkout`
-- **New brand** — `use /devrel-video for https://acme.com/app — extract the acme brand first, then walk sign-up → dashboard`
-- **Local product** — `use /devrel-video on my local app at http://localhost:3000 (start: npm run dev): sign-up → create a project → invite a teammate`
+## Features
 
-**With a talking head** (presenter bubble at intro/CTA — see [Talking-head avatar](#talking-head-avatar-bring-your-own) below):
-- **Narrated + your avatar** — `use /devrel-video for https://acme.com/app: narrated (voice leo) with my talking-head avatar at the intro and CTA. My plate is at ~/Videos/<Org>/DevRel/Talking_Head/<name>/plate.mp4`
-- **Avatar at intro only** — `…add my talking-head only at the intro, then let the product run full-screen` (plate as above)
-- **Pick the voice** — `…use a male voice — show me leo / dan / zac samples first` (the voice should match the presenter's)
+- **Real product capture:** browser interaction scripts with explicit beats and stable selectors.
+- **Branded composition:** title, browser frame, chapters, and CTA in a HyperFrames timeline.
+- **Local mastering and QA:** master/web copies, ffprobe checks, contact sheet, and thumbnail.
+- **Optional audio:** six local music styles, narration-driven timing, and voice variants.
+- **Optional presentation:** subtitles, private bring-your-own presenter footage, and terminal/browser sequences.
+- **Source-based workflow:** reusable brands, briefs, templates, and two complete worked examples.
 
-**Terminal + browser** (multi-environment — the demo switches between Claude Code and the web):
-- **CLI → browser → CLI** — `use /devrel-video for a tour that starts in Claude Code (prompt: "find me an AI weather agent I can call and pay for"), switches to acme.com/app, then back to Claude Code to pay it over MCP` — terminal beats are captured as real, sanitized Claude Code sessions; beats hand off with a smooth fade through the brand colour. See the re-enactment template [`.claude/skills/devrel-video/templates/cc-terminal.html`](.claude/skills/devrel-video/templates/cc-terminal.html).
-- **All in Claude Code** — `…make it entirely inside a Claude Code session — no browser` (one terminal frame for the whole runtime)
+Portrait/social output profiles remain on the roadmap. Full capture/render depends on your local toolchain; offline CI checks sources and selected local utilities, not the complete production stack. See [workflow](docs/workflow.md) and [usage](docs/usage.md).
 
-**Tweaks** (either mode):
-- **Pin an element** — `…open a specific item` (exact `a[href="…"]` in `capture.js`, no fallback)
-- **Re-render** — `re-render example-walkthrough with a slower detail scroll and a "Read the docs" CTA`
-- **Different length** — `make it ~45s with four chapters`, or `cut a 15s teaser`
+## Worked videos
 
-The skill gathers anything it still needs (audience, the one message, approved claims, and — for an avatar — your plate path) before recording.
+**Product walkthrough:** a local Acme fixture, real browser capture, narration/music, and EN/ES subtitles. [Source and commands](projects/example-walkthrough/README.md) · [Watch with sound](https://youtu.be/H6npd3uuqls).
 
-## Worked example
+[![Acme product walkthrough](projects/example-walkthrough/renders/demo.gif)](https://youtu.be/H6npd3uuqls)
 
-`projects/example-walkthrough/` — a ~24s silent tour of a public demo app (browse → filter by tag → open an
-article), framed and chaptered with the pipeline and branded with the default **Acme** placeholder brand.
-See its README for the exact commands — swap the URL and brand for your own.
+**Composed CLI/browser film:** a multi-environment example whose terminal scenes are authored HTML reenactments. [Source and explanation](projects/example-cli-tour/README.md) · [Watch with sound](https://youtu.be/lvpKaYUVNws).
 
-## Optional layers (all supported)
+[![Composed terminal and browser example](projects/example-cli-tour/renders/demo.gif)](https://youtu.be/lvpKaYUVNws)
 
-Music, narration (Orpheus TTS — male `leo`/`dan`/`zac` or female `leah`/`tara`/`jess`/`mia`/`zoe`; match it to
-your presenter), a **face-only presenter avatar** (LatentSync on your own GPU host, lip-synced, shown briefly at
-intro/CTA), multi-language subtitles, and **multi-environment demos** that switch between Claude Code (terminal)
-and the browser — steps 5.4–5.8 of the skill. Still on the roadmap: portrait/social output profiles. Details in
-[`.claude/skills/devrel-video/references/production-notes.md`](.claude/skills/devrel-video/references/production-notes.md).
+The longer examples remain intact. Generated MP4/audio files are ignored; rebuild them from the included sources. See [usage prompts](docs/usage.md) for silent, narrated, avatar, voice-swap, and multi-environment requests.
 
-## Music & voice
+## Configuration
 
-Both are prompt-selectable — set them in the brief's `audio:` block, or on the command.
+Each video uses `projects/<slug>/brief.yaml`, brand tokens under `brands/<name>/`, and generated output under its project folder. Optional private settings live outside Git, selected by `DEVREL_VIDEO_ENV`.
 
-**Music bed** — six local, license-clean styles (`scripts/gen-bgm.py`; default **`corporate`**). Pick one with
-`BGM_STYLE=<style>` or `audio.music: <style>` in the brief:
+| Setting | Purpose |
+| --- | --- |
+| `brief.yaml` | Product URL, audience, message, beats, brand, duration, and optional layers |
+| `ORPHEUS_URL` / `ORPHEUS_KEY` | Your optional narration endpoint and token |
+| `AVATAR_HOST` / `LS_DIR` | Your optional SSH GPU host and LatentSync checkout |
+| `BGM_STYLE` | Local background-music style; default `corporate` |
 
-| Style | Feel |
-|---|---|
-| `corporate` *(default)* | Clean, optimistic, steady — classic product-demo |
-| `ambient` | Slow, warm pad + Rhodes, no drums — premium / focused |
-| `lofi` | Mellow chords + soft beat — cozy, friendly |
-| `uplift` | Bright pad + arpeggio + light beat — energetic |
-| `minimal` | Sparse keys + pad swells — airy, elegant |
-| `focus` | Pad + pulsing bass, minimal melody — subdued, technical |
+See [configuration](docs/configuration.md), the [actual brief template](.claude/skills/devrel-video/templates/brief.example.yaml), and [security/privacy guidance](docs/security-and-privacy.md). Keep private footage and credentials outside this public repository.
 
-Audition any style: `scripts/gen-bgm.py sample.wav 15 <style>`.
+## How it works
 
-**Narration voice** — the reference TTS (Orpheus) offers male `leo` / `dan` / `zac` and female `leah` / `tara` /
-`jess` / `mia` / `zoe`. Set `audio.narration: <voice>` in the brief, or swap after the fact with one command:
-`scripts/variant.sh projects/<slug> <voice>` (match the voice to your presenter). Narration needs a TTS
-endpoint — see [`scripts/_env.sh`](.claude/skills/devrel-video/scripts/_env.sh).
+Brief → explore → brand → capture → compose → optional layers → render/QA → thumbnail. The [skill](.claude/skills/devrel-video/SKILL.md) coordinates existing tools rather than replacing them. Detailed production steps are in the [workflow guide](docs/workflow.md) and [production notes](.claude/skills/devrel-video/references/production-notes.md).
 
-## Talking-head avatar (bring your own)
+## Repository layout
 
-The presenter bubble is **your own face** — you supply the recording; this studio never bundles a face.
+```text
+.claude/skills/devrel-video/  Skill instructions, scripts, templates, production notes
+brands/                     Brand tokens and logos
+projects/                   Curated public examples; private projects stay ignored
+examples/                   Real harness recording, public input, generated brief
+assets/                     Shared banner, social card, and short terminal GIF
+docs/                       Onboarding, usage, configuration, troubleshooting
+```
 
-**Privacy.** Your talking-head footage lives **outside this repo**, e.g. `~/Videos/<Org>/DevRel/Talking_Head/<name>/`,
-and is referenced from `brief.yaml` (`avatar_plate:`). Nothing derived from it is committed either — the generated
-bubbles (`projects/<slug>/avatar-*.mp4`) and rendered videos are gitignored. **This repo is public; keep faces out of it.**
+## Documentation
 
-**Required format** (one clip is enough to start):
-- **Sit still**, look at the lens, and **talk naturally** for ~30–60s. The words don't matter — only your face and
-  mouth motion are used; the narration is re-synced on top.
-- Face front-on, filling a good part of the frame; **even lighting** (no hard shadow across the mouth); nothing over the mouth.
-- 1080p+ (720p is fine), **any fps** (the pipeline normalizes to 25 fps, LatentSync's rate). No green screen — the bubble is a circular crop.
+- [Installation and production prerequisites](docs/installation.md)
+- [Configuration](docs/configuration.md)
+- [Prompts and optional layers](docs/usage.md)
+- [Workflow](docs/workflow.md)
+- [Troubleshooting](docs/troubleshooting.md)
+- [Security, privacy, and media rights](docs/security-and-privacy.md)
+- [Banner generation and social preview](docs/branding.md)
+- Original references: [studio design guide](local-devrel-video-studio-guide.md) · [avatar guide](local-talking-video-avatar-guide.md)
 
-Drop the file in your Talking_Head folder, point `avatar_plate:` at it, and the skill lip-syncs it to the narration
-at the intro/CTA — regenerated from your local copy each render.
+## Contributing and support
+
+Use [Issues](https://github.com/aaitor/devrel-video-studio/issues) for questions, bugs, and ideas. Read [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md); report vulnerabilities privately through [SECURITY.md](SECURITY.md).
+
+Install `requirements-dev.txt` in a virtual environment and run `python3 scripts/check.py`. See [CHANGELOG.md](CHANGELOG.md) for changes. Live recordings, service calls, GPU jobs, and full renders are manual validation steps.
+
+## License
+
+[MIT](LICENSE) for original studio content. Embedded banner fonts retain their [OFL notices](assets/font-notices/NOTICE.md); external tools/models/media retain their own terms. See [licensing](docs/licensing.md).
+
+---
+
+Built by [Aitor Argomaniz](https://github.com/aaitor) · [LinkedIn](https://www.linkedin.com/in/aitorargomaniz) · [More open source](https://github.com/aaitor?tab=repositories)

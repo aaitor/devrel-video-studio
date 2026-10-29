@@ -45,7 +45,7 @@ Each has a commented seam in `templates/composition.html` and a field in `brief.
    (`gen-bgm.py bed.wav [dur] [style]`, then ffmpeg → `bgm.mp3`), wired through the `<audio id="bgm" … data-track-index="9">`
    seam. Six styles (3rd arg or `BGM_STYLE` env, default **corporate**): corporate · ambient · lofi · uplift ·
    minimal · focus — warm engine (windowed-sinc lowpass + FFT reverb + FM/Rhodes keys + soft drums; see the
-   README "Music & voice" table). Audition one: `gen-bgm.py sample.wav 15 <style>`. Produced track: `/media-use resolve --type bgm` (HeyGen catalog — needs `heygen` sign-in) or
+   repo-root `docs/usage.md` "Music & voice" table). Audition one: `gen-bgm.py sample.wav 15 <style>`. Produced track: `/media-use resolve --type bgm` (HeyGen catalog — needs `heygen` sign-in) or
    `--local-only` (MusicGen). Under narration, lower the bed and duck with `/hyperframes-audio` (voiceover
    carve). Tune key/tempo/layers in `gen-bgm.py`. Note: convert footage with **dense keyframes**
    (`-g 30 -keyint_min 30 -sc_threshold 0`) or the renderer freezes footage frames between seeks.

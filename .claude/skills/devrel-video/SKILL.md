@@ -13,6 +13,8 @@ A **thin orchestrator**. It does not reimplement capture or composition — it d
 
 Read `references/production-notes.md` first for environment gotchas (sandbox flags, `init` flags, CDN vendoring, determinism) and the production steps for **music, narration, avatar, subtitles, and multi-environment (terminal ⇄ browser)** (all supported — steps 5.4–5.8; the template and manifest carry seams for each).
 
+For studio installation and prerequisites, see the repository-root `docs/installation.md`. The quick repository demo in `examples/README.md` demonstrates intake only; use the production workflow below for actual videos.
+
 ## When to use
 
 - "record / make / produce a walkthrough, demo, catalog tour, or promo of `<web product / URL>`"
