@@ -40,3 +40,15 @@ The capture wrapper installs Playwright CLI under `.pw/` if needed; it uses npm 
 Follow the [worked example](../projects/example-walkthrough/README.md) to serve the local Acme app, capture three real interactions, compose, render, and generate a thumbnail. Begin with a silent cut. Narration, avatars, and voice swapping have extra requirements documented in [configuration](configuration.md) and [usage](usage.md).
 
 Full video generation is a local production workflow and can take time and disk space. The README demo plans a brief only; it does not prove your capture/render stack is installed.
+
+## Install v1.0
+
+For the first release, clone the tag instead of the moving default branch:
+
+```bash
+git clone --branch v1.0 --depth 1 https://github.com/aaitor/skill-video-studio.git
+cd skill-video-studio
+claude
+```
+
+The release keeps the native workspace layout and `/devrel-video` invocation. See the [release notes](https://github.com/aaitor/skill-video-studio/releases/tag/v1.0) for included features and validation limits.

@@ -1,9 +1,10 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/aaitor/assets/57ffb65100e722a14713c546690cd4a90cf6355d/banners/devrel-video-studio.svg" alt="DevRel Video Studio — from product workflow to polished demo" width="100%">
+  <img src="https://raw.githubusercontent.com/aaitor/assets/fd5c94691f8a2c0f751834e20ef6851748bd766d/banners/skill-video-studio.svg" alt="Video Studio Skill — from product workflow to polished demo" width="100%">
 </p>
 
-<h1 align="center">DevRel Video Studio</h1>
+<h1 align="center">Video Studio Skill</h1>
 <p align="center">From product workflow to polished demo.</p>
+<p align="center"><a href="https://github.com/aaitor/skill-video-studio/releases/tag/v1.0">v1.0 release</a> · <code>aaitor/skill-video-studio</code></p>
 <p align="center">
   <a href="#quick-start">Quick start</a> ·
   <a href="#worked-videos">Worked videos</a> ·
@@ -19,7 +20,7 @@ A local video-production workspace driven by the **`/devrel-video` Claude Code s
 
 ## Demo
 
-![Install DevRel Video Studio and prepare a real walkthrough brief in Claude Code](assets/terminal-demo.gif)
+![Install Video Studio Skill and prepare a real walkthrough brief in Claude Code](assets/terminal-demo.gif)
 
 A real Claude Code session using the installed project skill: clone the studio, prepare an Acme walkthrough brief, and inspect the three-beat plan on a black background. This short demo stops **before capture and rendering**; it does not claim a video was produced. The [recording guide](examples/README.md) includes the actual generated brief and reproduction command.
 

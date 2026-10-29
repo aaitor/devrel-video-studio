@@ -1,7 +1,8 @@
 # Changelog
 
-## Unreleased
+## v1.0 — 2026-10-29
 
+- Publish the first release as Video Studio Skill with updated shared artwork.
 - Rename the repository to `skill-video-studio`; update installation, project CTA links, and recording commands. Keep `/devrel-video` unchanged.
 
 - Adopt the shared repository format with a branded banner, MIT license, focused README, guides, and community files.

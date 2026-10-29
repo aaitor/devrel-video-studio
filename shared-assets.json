@@ -4,11 +4,11 @@
     "revision": "fb09a0208fffac8b56ce917bf5d6bf3805f2dbd3"
   },
   "repository": "https://github.com/aaitor/assets",
-  "revision": "57ffb65100e722a14713c546690cd4a90cf6355d",
+  "revision": "fd5c94691f8a2c0f751834e20ef6851748bd766d",
   "files": {
-    "assets/hero.svg": "banners/devrel-video-studio.svg",
-    "assets/social-preview.svg": "social/devrel-video-studio.svg",
-    "assets/social-preview.png": "social/devrel-video-studio.png",
+    "assets/hero.svg": "banners/skill-video-studio.svg",
+    "assets/social-preview.svg": "social/skill-video-studio.svg",
+    "assets/social-preview.png": "social/skill-video-studio.png",
     "examples/theme.tape": "terminal/theme.tape"
   },
   "demo_spec": "examples/demo-spec.json"
